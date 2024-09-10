@@ -83,7 +83,7 @@ function update_test_ref()
 
     echo "[UPDATING] ${NAME}"
 
-    typst compile test.typ "ref{n}.png" --root "$TYPST_ROOT" --font-path "$TYPST_ROOT/fonts" 
+    typst compile test.typ "ref{n}.png" --root "$TYPST_ROOT"
   )
 }
 
@@ -98,7 +98,7 @@ function run_test()
 
     if [[ ! -f test.typ ]]; then echo "Missing file 'test.typ'!"; exit 1; fi
 
-    typst compile test.typ "res{n}.png" --root "$TYPST_ROOT" --font-path "$TYPST_ROOT/fonts" 
+    typst compile test.typ "res{n}.png" --root "$TYPST_ROOT"
 
 
     for res_file in res*.png; do
