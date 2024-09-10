@@ -4,12 +4,37 @@
     {
       "label": "typst compile",
       "type": "shell",
-      "command": "typst watch ${file} --open --root . --font-path fonts ",
+      "windows": {
+        "command": "typst watch ${file} --open --root . --font-path fonts "
+      },
+      "linux": {
+        "command": "typst watch ${file} --open zathura --root . --font-path fonts "
+      },
       "problemMatcher": [],
       "group": {
         "kind": "build",
         "isDefault": true
-      }
+      },
+    },
+    {
+      "label": "typst png",
+      "type": "shell",
+      "command": "typst compile ${file} --open --root . --font-path fonts --format png",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+    },
+    {
+      "label": "typst svg",
+      "type": "shell",
+      "command": "typst compile ${file} --open --root . --font-path fonts --format svg",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
     }
   ]
 }
