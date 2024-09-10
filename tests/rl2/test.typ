@@ -18,4 +18,5 @@
     to[short,*-] ++(2,0)
     to[R,l=$R_3$] ++(0,-4) 
     to[short,-*] ++(-2,0);
+  \end{circuitikz}
 ```
