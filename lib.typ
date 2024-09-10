@@ -23,9 +23,9 @@
             elements.push(("ground", coords));
         } else if line.contains("to") {
             // Parsing di elementi come resistori, sorgenti, ecc.
-            let (name,l-modifier,label,voltage,flow,node-right, node-left, coordinate-name) = line.match(regex("to\[([0-9A-Za-z_]+)(?:,l(_?)=)?([^,]*)?(?:,v\^?=)?([^,]*)?(?:,f>_=)?([^,]*)(,\-\*)?(,\*\-)?\]\s\+\+\s\(-?\d+,-?\d+\)(?: coordinate \()?([0-9A-Za-z_]+)?")).captures
+            let (name,l-modifier,label,voltage,flow,node-right, node-left, coordinate-name) = line.match(regex("to\[([0-9A-Za-z_]+)(?:,l(_?)=)?([^,]*)?(?:,v\^?=)?([^,]*)?(?:,f>_=)?([^,]*)(,\-\*)?(,\*\-)?\]\s*\+\+\s*\(-?\d+,-?\d+\)(?: coordinate \()?([0-9A-Za-z_]+)?")).captures
 
-            let dest-point = line.match(regex("\+\+\s\((-?\d+),(-?\d+)\)")).captures.map((it) => {int(it)})
+            let dest-point = line.match(regex("\+\+\s*\((-?\d+),(-?\d+)\)")).captures.map((it) => {int(it)})
             
             elements.push((name: name,l-modifier: l-modifier, label: label,flow: flow,node-right:node-right,node-left:node-left, coordinate-name: coordinate-name, dest-point: dest-point, voltage: voltage));
         }

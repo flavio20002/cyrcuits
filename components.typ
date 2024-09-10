@@ -23,7 +23,13 @@
       padding = pad
       anchor = "east"
     }
-  } else {
+  } else if (angle == 0deg){ 
+    anchor = "south"
+    if (l-modifier != ""){
+      padding = pad
+      anchor = "north"
+    }
+  }else {
     anchor = "east"
     if (l-modifier != ""){
       padding = pad
