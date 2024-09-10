@@ -261,6 +261,51 @@
   })
 }
 
+#let L(start, end, l-modifier:"", label:none, flow: "", voltage: "", name: none, ..style) = {
+  let (x1,y1,..) = start
+  let (x2,y2,..) = end
+  let angle = calc.atan2(x2 - x1, y2 - y1)
+  component-content(start,end, l-modifier, label, angle,pad:1)
+  if (flow != ""){
+    component-flow(start,end,angle,flow)
+  }
+  if (voltage != ""){
+    component-voltage(start,end,angle,voltage)
+  }
+  group(name: name, ctx => {
+    rotate(angle, origin: start)
+    let component-length = 1
+    let radius = 0.14
+    let height = 5/14
+    let start-angle = 230deg
+    let stop-angle = -50deg
+    let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
+    merge-path({
+      line(
+        start,
+        (rel: ((total-length - component-length)/2, 0)),
+        fill: none
+      )
+      arc((), start: 180deg, stop: stop-angle, radius: radius, name: "arc1")
+      arc("arc1.end", start: start-angle, stop: stop-angle, radius: radius, name: "arc2")
+      arc("arc2.end", start: start-angle, stop: stop-angle, radius: radius, name: "arc3")
+      arc("arc3.end", start: start-angle, stop: stop-angle, radius: radius, name: "arc4")
+      arc("arc4.end", start: start-angle, stop: 0deg, radius: radius, name: "arc5")
+      line(
+        (rel: (1+(total-length - component-length)/2, 0), to: start),
+        (rel: ((total-length - component-length)/2, 0)),
+        fill: none
+      )
+    })
+    anchors((
+      north: (0, height/2),
+      south: (0, -height/2),
+      label: (0, height + 0.1),
+      annotation: "south"
+    ))
+  })
+}
+
 #let node(start) = {
   circle(start, radius: 0.075, stroke: black, fill: black)
 }

@@ -62,6 +62,8 @@
             nos(start, end, l-modifier: element.l-modifier, label: element.label)
           } else  if (element.name == "C"){
             C(start, end, l-modifier: element.l-modifier, label: element.label, flow: element.flow, voltage: element.voltage)
+          } else  if (element.name == "L"){
+            L(start, end, l-modifier: element.l-modifier, label: element.label, flow: element.flow, voltage: element.voltage)
           }
 
           if (element.node-left != none){
