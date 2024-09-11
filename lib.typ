@@ -33,8 +33,8 @@
             let node-left = none
             let coordinate-name = none
             
-            if line.contains(regex("to\[([0-9A-Za-z_]+)=([^,]*)")){
-              (name,label) = line.match(regex("to\[([0-9A-Za-z_]+)=([^,]*)")).captures
+            if line.contains(regex("to\[([0-9A-Za-z_]+)=([^,\]]*)")){
+              (name,label) = line.match(regex("to\[([0-9A-Za-z_]+)=([^,\]]*)")).captures
             }
             else{
               name = line.match(regex("to\[([0-9A-Za-z_]+)")).captures.at(0)
@@ -52,12 +52,12 @@
               (l-modifier,label) = line.match(regex("l(_?)=([^,\]]*)?")).captures
             }
 
-            if line.contains(regex("(,\-\*)")){
-              node-right = line.match(regex("(,\-\*)")).captures.at(0)
+            if line.contains(regex("(,\s*\-\*)")){
+              node-right = line.match(regex("(,\s*\-\*)")).captures.at(0)
             }
 
-            if line.contains(regex("(,\*\-)")){
-              node-left = line.match(regex("(,\*\-)")).captures.at(0)
+            if line.contains(regex("(,\s*\*\-)")){
+              node-left = line.match(regex("(,\s*\*\-)")).captures.at(0)
             }
             
             if line.contains(regex("coordinate \(([0-9A-Za-z_]+)")){
