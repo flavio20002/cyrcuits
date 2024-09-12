@@ -62,13 +62,13 @@
   content((a: center-point, b: center-point-b, number: 0.2, angle: 90deg), angle:content-angle, text(size: 1.4em,eval(flow)), anchor: anchor)
 }
 
-#let component-voltage(start,end,angle, flow) = {
+#let component-voltage(start,end,angle, flow,padding:1.5) = {
   let center-point-a = (start,50%,end)
   let center-point-a1 = (start,20%,end)
   let center-point-a2 = (start,80%,end)
-  let center-point-b = (a: center-point-a, b: start, number: -1.5, angle: 90deg)
-  let center-point-b1 = (a: center-point-a1, b: start, number: -0.5, angle: 90deg)
-  let center-point-b2 = (a: center-point-a2, b: start, number: -0.5, angle: 90deg)
+  let center-point-b = (a: center-point-a, b: start, number: -1*padding, angle: 90deg)
+  let center-point-b1 = (a: center-point-a1, b: start, number: -1*(padding - 0.25)/2, angle: 90deg)
+  let center-point-b2 = (a: center-point-a2, b: start, number: -1*(padding - 0.25)/2, angle: 90deg)
   let center-point-c = (rel: (angle,-1), to: center-point-b)
   let center-point-d = (rel: (angle,1), to: center-point-b)
   let center-point = (center-point-b1,50%, center-point-b2)
@@ -87,7 +87,7 @@
   } else {
     anchor = "east"
   }
-  content((a: center-point, b: center-point-b2, number: 0.75, angle: 90deg), angle:content-angle, text(size: 1.4em,eval(flow)), anchor: anchor)
+  content((a: center-point, b: center-point-b2, number: padding/2, angle: 90deg), angle:content-angle, text(size: 1.4em,eval(flow)), anchor: anchor)
 }
 
 #let R(start, end, l-modifier:"", label:none, flow: "", name: none, voltage: "", ..style) = {
@@ -276,7 +276,7 @@
     component-flow(start,end,angle,flow)
   }
   if (voltage != ""){
-    component-voltage(start,end,angle,voltage)
+    component-voltage(start,end,angle,voltage,padding:1)
   }
   group(name: name, ctx => {
     rotate(angle, origin: start)

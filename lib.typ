@@ -32,6 +32,8 @@
             let node-right = none
             let node-left = none
             let coordinate-name = none
+            let node-anchor = none
+            let node = none
             
             if line.contains(regex("to\[([0-9A-Za-z_]+)=([^,\]]*)")){
               (name,label) = line.match(regex("to\[([0-9A-Za-z_]+)=([^,\]]*)")).captures
@@ -62,6 +64,10 @@
             
             if line.contains(regex("coordinate \(([0-9A-Za-z_]+)")){
                coordinate-name = line.match(regex("coordinate \(([0-9A-Za-z_]+)")).captures.at(0)
+            }
+
+            if line.contains(regex("node\[anchor=([0-9A-Za-z]+)\]\{[^,\}]+\}")){
+              (node-anchor,node)= line.match(regex("node\[anchor=([0-9A-Za-z]+)\]\{([^,\}]+)\}")).captures
             }
             
             let dest-point = line.match(regex("\+\+\s*\((-?\d+),(-?\d+)\)")).captures.map((it) => {int(it)})
