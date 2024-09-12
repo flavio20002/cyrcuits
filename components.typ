@@ -118,12 +118,6 @@
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
     )
-    anchors((
-      north: (0, height/2),
-      south: (0, -height/2),
-      label: (0, height + 0.1),
-      annotation: "south"
-    ))
   })
 }
 
@@ -151,12 +145,6 @@
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
     )
-    anchors((
-      north: (0, height/2),
-      south: (0, -height/2),
-      label: (0, height + 0.1),
-      annotation: "south"
-    ))
   })
 }
 
@@ -182,16 +170,10 @@
       (rel: ((total-length - component-length), 0)),
       fill: none
     )
-    anchors((
-      north: (0, height/2),
-      south: (0, -height/2),
-      label: (0, height + 0.1),
-      annotation: "south"
-    ))
   })
 }
 
-#let nos(start, end, label:none, name: none, ..style) = {
+#let nos(start, end, l-modifier:"", label:none, name: none, ..style) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
@@ -200,7 +182,7 @@
   if (angle == 0deg or angle == 90deg){
     content-angle = 0deg
   }
-  content( (a: center-point, b: start, number: -0.75, angle: 90deg), angle:content-angle, text(size: 14pt,eval(label)))
+  component-content(start,end, l-modifier, label, angle,pad:0.5)
   group(name: name, ctx => {
     rotate(angle, origin: start)
     let component-length = 0.5
@@ -215,12 +197,35 @@
       fill: none
     )
     line((rel: (0.5 + (total-length - component-length)/2, 0), to: start), (rel: ((total-length - component-length)/2, 0)))
-    anchors((
-      north: (0, height/2),
-      south: (0, -height/2),
-      label: (0, height + 0.1),
-      annotation: "south"
-    ))
+  })
+}
+
+#let ospst(start, end, l-modifier:"", label:none, name: none, ..style) = {
+  set-style(mark: (fill: black))
+  let (x1,y1,..) = start
+  let (x2,y2,..) = end
+  let angle = calc.atan2(x2 - x1, y2 - y1)
+  let center-point = (start,50%,end)
+  let content-angle = angle
+  if (angle == 0deg or angle == 90deg){
+    content-angle = 0deg
+  }
+  component-content(start,end, l-modifier, label, angle,pad:0.5)
+  group(name: name, ctx => {
+    rotate(angle, origin: start)
+    let component-length = 0.5
+    let step = 1/6
+    let height = 5/14
+    let sgn = -1
+    let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
+    line(
+      start,
+      (rel: ((total-length - component-length)/2, 0)),
+      (rel: (0.5, 0.35)),
+      fill: none
+    )
+    line((rel: (0.5 + (total-length - component-length)/2, 0), to: start), (rel: ((total-length - component-length)/2, 0)))
+    arc((rel: ((total-length - component-length)/2 + component-length/2, 0), to: start), radius: 0.4,start: 0deg, stop: 90deg, mark: (end: ">"))
   })
 }
 
@@ -254,12 +259,6 @@
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
     )
-    anchors((
-      north: (0, height/2),
-      south: (0, -height/2),
-      label: (0, height + 0.1),
-      annotation: "south"
-    ))
   })
 }
 
@@ -298,13 +297,7 @@
         (rel: ((total-length - component-length)/2, 0)),
         fill: none
       )
-    })
-    anchors((
-      north: (0, height/2),
-      south: (0, -height/2),
-      label: (0, height + 0.1),
-      annotation: "south"
-    ))
+    })    
   })
 }
 

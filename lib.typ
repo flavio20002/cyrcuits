@@ -105,6 +105,8 @@
             short(start, end,l-modifier: element.l-modifier, label: element.label)
           } else  if (element.name == "nos"){
             nos(start, end, l-modifier: element.l-modifier, label: element.label)
+          } else  if (element.name == "ospst"){
+            ospst(start, end, l-modifier: element.l-modifier, label: element.label)
           } else  if (element.name == "C"){
             C(start, end, l-modifier: element.l-modifier, label: element.label, flow: element.flow, voltage: element.voltage)
           } else  if (element.name == "L"){
