@@ -42,7 +42,7 @@
 #let component-flow(start,end,angle, flow) = {
   let center-point-a = (start,10%,end)
   let center-point-b = (a: center-point-a, b: start, number: 0.4, angle: 90deg)
-  let center-point-c = (rel: (angle,1), to: center-point-b)
+  let center-point-c = (rel: (angle,0.75), to: center-point-b)
   let center-point = (center-point-b,50%, center-point-c)
   let content-angle = angle
   let (x1,y1,..) = start

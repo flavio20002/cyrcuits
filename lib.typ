@@ -76,7 +76,7 @@
 
 #let draw-circuit(scale, raw_code) =  {
   let elements = parse-circuit(raw_code)
-  cetz.canvas(length: 1cm * scale, {
+  cetz.canvas(length: 1.5cm * scale, {
     import cetz.draw: *
     get-ctx(ctx => {
       let start-point = none
