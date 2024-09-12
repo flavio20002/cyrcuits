@@ -66,13 +66,13 @@
                coordinate-name = line.match(regex("coordinate \(([0-9A-Za-z_]+)")).captures.at(0)
             }
 
-            if line.contains(regex("node\[anchor=([0-9A-Za-z]+)\]\{[^,\}]+\}")){
+            if line.contains(regex("node\[anchor=([0-9A-Za-z]+)\]\{([^,\}]+)\}")){
               (node-anchor,node)= line.match(regex("node\[anchor=([0-9A-Za-z]+)\]\{([^,\}]+)\}")).captures
             }
             
             let dest-point = line.match(regex("\+\+\s*\((-?\d+),(-?\d+)\)")).captures.map((it) => {int(it)})
             
-            elements.push((name: name,l-modifier: l-modifier, label: label,flow: flow,node-right:node-right,node-left:node-left, coordinate-name: coordinate-name, dest-point: dest-point, voltage: voltage));
+            elements.push((name: name,l-modifier: l-modifier, label: label,flow: flow,node-right:node-right,node-left:node-left, coordinate-name: coordinate-name, dest-point: dest-point, voltage: voltage,node-anchor:node-anchor,node:node));
         }
       }
     }
@@ -117,6 +117,10 @@
 
           if (element.node-right != none){
             node(end)
+          }
+
+          if (element.node != none){
+            node-content(end,element.node,element.node-anchor)
           }
           
           if (element.coordinate-name != none){

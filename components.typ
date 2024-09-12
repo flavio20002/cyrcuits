@@ -11,7 +11,6 @@
 #let component-content(start,end, l-modifier, label, angle,pad: 0.5) = {
   let center-point = (start,50%,end)
   let content-angle = angle
-  let padding = -1*pad
   let anchor = "east"
   if (angle == 0deg or angle == 90deg or angle == -90deg){
     content-angle = 0deg
@@ -20,23 +19,20 @@
   if (angle == -90deg){
     anchor = "west"
     if (l-modifier != ""){
-      padding = pad
       anchor = "east"
     }
   } else if (angle == 0deg){ 
     anchor = "south"
     if (l-modifier != ""){
-      padding = pad
       anchor = "north"
     }
   }else {
     anchor = "east"
     if (l-modifier != ""){
-      padding = pad
       anchor = "west"
     }
   }
-  content((a: center-point, b: start, number: padding, angle: 90deg), angle:content-angle, text(size: 1.7em,eval(label)), anchor: anchor)
+  content(center-point, angle:content-angle, text(size: 1.7em,eval(label)), anchor:anchor, padding:pad)
 }
 
 #let component-flow(start,end,angle, flow) = {
@@ -314,4 +310,8 @@
 
 #let node(start) = {
   circle(start, radius: 0.075, stroke: black, fill: black)
+}
+
+#let node-content(start,node,node-anchor) = {
+  content(start,text(size: 1.7em,eval(node)),anchor: node-anchor,padding: 0.25)
 }
