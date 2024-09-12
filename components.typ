@@ -11,6 +11,7 @@
 #let component-content(start,end, l-modifier, label, angle,pad: 0.5) = {
   let center-point = (start,50%,end)
   let content-angle = angle
+  let padding = -1*pad
   let anchor = "east"
   if (angle == 0deg or angle == 90deg or angle == -90deg){
     content-angle = 0deg
@@ -19,20 +20,23 @@
   if (angle == -90deg){
     anchor = "west"
     if (l-modifier != ""){
+      padding = pad
       anchor = "east"
     }
   } else if (angle == 0deg){ 
     anchor = "south"
     if (l-modifier != ""){
+      padding = pad
       anchor = "north"
     }
   }else {
     anchor = "east"
     if (l-modifier != ""){
+      padding = pad
       anchor = "west"
     }
   }
-  content(center-point, angle:content-angle, text(size: 1.7em,eval(label)), anchor:anchor, padding:pad)
+  content((a: center-point, b: start, number: padding, angle: 90deg), angle:content-angle, text(size: 1.7em,eval(label)), anchor: anchor)
 }
 
 #let component-flow(start,end,angle, flow) = {
@@ -125,7 +129,7 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  component-content(start,end, l-modifier, label, angle,pad:1)
+  component-content(start,end, l-modifier, label, angle,pad:0.75)
   group(name: name, ctx => {
     rotate(angle, origin: start)
     let component-length = 0.25
