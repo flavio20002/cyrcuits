@@ -152,7 +152,7 @@
   })
 }
 
-#let short(start, end, label:none, name: none, ..style) = {
+#let short(start, end, label:"", name: none, ..style) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
@@ -161,7 +161,9 @@
   if (angle == 0deg or angle == 90deg){
     content-angle = 0deg
   }
-  content( (a: center-point, b: start, number: -0.75, angle: 90deg), angle:content-angle, text(size: 14pt,eval(label)))
+  if (label!=""){
+    content( (a: center-point, b: start, number: -0.75, angle: 90deg), angle:content-angle, text(size: 14pt,eval(label)))
+  }
   group(name: name, ctx => {
     rotate(angle, origin: start)
     let component-length = 0
@@ -310,5 +312,9 @@
 }
 
 #let node-content(start,node,node-anchor) = {
-  content(start,text(size: 1.7em,eval(node)),anchor: node-anchor,padding: 0.25)
+  let angle = 90deg
+  if (node-anchor == "north"){
+    angle = -90deg
+  }
+  content((rel: (angle: angle, radius: 0.25), to: start),text(size: 1.7em,eval(node)),anchor: node-anchor)
 }
