@@ -36,7 +36,7 @@
       anchor = "west"
     }
   }
-  content((a: center-point, b: start, number: padding, angle: 90deg), angle:content-angle, text(size: 1.7em,eval(label)), anchor: anchor)
+  content((a: center-point, b: start, number: padding, angle: 90deg), angle:content-angle, text(eval(label)), anchor: anchor)
 }
 
 #let component-flow(start,end,angle,flow) = {
@@ -59,7 +59,7 @@
   } else {
     anchor = "west"
   }
-  content((a: center-point, b: center-point-b, number: 0.2, angle: 90deg), angle:content-angle, text(size: 1.4em,eval(flow)), anchor: anchor)
+  content((a: center-point, b: center-point-b, number: 0.2, angle: 90deg), angle:content-angle, text(eval(flow)), anchor: anchor)
 }
 
 #let component-voltage(start,end,angle,voltage,padding:1.5) = {
@@ -89,7 +89,7 @@
   } else {
     anchor = "east"
   }
-  content((a: center-point, b: center-point-b2, number: padding/2, angle: 90deg), angle:content-angle, text(size: 1.4em,eval(voltage)), anchor: anchor)
+  content((a: center-point, b: center-point-b2, number: padding/2, angle: 90deg), angle:content-angle, text(eval(voltage)), anchor: anchor)
 }
 
 #let R(start, end, l-modifier:"", label:none, flow: "", name: none, voltage: "", ..style) = {
@@ -164,7 +164,7 @@
     content-angle = 0deg
   }
   if (label!=""){
-    content( (a: center-point, b: start, number: -0.75, angle: 90deg), angle:content-angle, text(size: 14pt,eval(label)))
+    content( (a: center-point, b: start, number: -0.75, angle: 90deg), angle:content-angle, text(eval(label)))
   }
   group(name: name, ctx => {
     rotate(angle, origin: start)
@@ -318,5 +318,5 @@
   if (node-anchor == "north"){
     angle = -90deg
   }
-  content((rel: (angle: angle, radius: 0.25), to: start),text(size: 1.7em,eval(node)),anchor: node-anchor)
+  content((rel: (angle: angle, radius: 0.25), to: start),text(eval(node)),anchor: node-anchor)
 }

@@ -80,10 +80,11 @@
 }
 
 
-#let draw-circuit(scale, raw_code) =  {
+#let draw-circuit(scaleFactor, raw_code) =  {
   let elements = parse-circuit(raw_code)
-  cetz.canvas(length: 1.5cm * scale, {
+  cetz.canvas(length: 1cm, {
     import cetz.draw: *
+    scale(scaleFactor)
     get-ctx(ctx => {
       let start-point = none
       let coordinates = ("origin" : (0,0))
@@ -137,7 +138,6 @@
 
 #let cyrcuits(scale:1, doc) = [
   #show raw.where(lang: "circuitkz") : it => [
-    #set text(scale * 1em)
     #draw-circuit(scale, it)
   ]
   #doc
