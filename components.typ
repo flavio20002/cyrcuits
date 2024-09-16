@@ -127,11 +127,14 @@
   })
 }
 
-#let battery1(start, end, l-modifier:"", label:none, name: none, ..style) = {
+#let battery1(start, end, l-modifier:"", label:none, flow: "", name: none, invert:false, ..style) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
   component-content(start,end, l-modifier, label, angle,pad:0.75)
+  if (flow != ""){
+    component-flow(start,end,angle, flow)
+  }
   group(name: name, ctx => {
     rotate(angle, origin: start)
     let component-length = 0.25
@@ -144,8 +147,14 @@
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
     )
-    line((rel: (0, -0.3)), (rel: (0, 0.6)),)
-    line((rel: (0.25, 0.3)), (rel: (0, -1.2)),)
+    if (invert){
+      line((rel: (0, -0.6)), (rel: (0, 1.2)),)
+      line((rel: (0.25, -0.3)), (rel: (0, -0.6)),) 
+    }
+    else{
+      line((rel: (0, -0.3)), (rel: (0, 0.6)),)
+      line((rel: (0.25, 0.3)), (rel: (0, -1.2)),)
+    }
     line(
       (rel: (0.25+(total-length - component-length)/2, 0), to: start),
       (rel: ((total-length - component-length)/2, 0)),

@@ -34,6 +34,7 @@
             let coordinate-name = none
             let node-anchor = none
             let node = none
+            let invert = false
             
             if line.contains(regex("to\[([0-9A-Za-z_]+)=([^,\]]*)")){
               (name,label) = line.match(regex("to\[([0-9A-Za-z_]+)=([^,\]]*)")).captures
@@ -69,10 +70,14 @@
             if line.contains(regex("node\[anchor=([0-9A-Za-z]+)\]\{([^,\}]+)\}")){
               (node-anchor,node)= line.match(regex("node\[anchor=([0-9A-Za-z]+)\]\{([^,\}]+)\}")).captures
             }
+
+            if line.contains(regex(",\s*invert")){
+               invert = true
+            }
             
             let dest-point = line.match(regex("\+\+\s*\((-?\d+),(-?\d+)\)")).captures.map((it) => {int(it)})
             
-            elements.push((name: name,l-modifier: l-modifier, label: label,flow: flow,node-right:node-right,node-left:node-left, coordinate-name: coordinate-name, dest-point: dest-point, voltage: voltage,node-anchor:node-anchor,node:node));
+            elements.push((name: name,l-modifier: l-modifier, label: label,flow: flow,node-right:node-right,node-left:node-left, coordinate-name: coordinate-name, dest-point: dest-point, voltage: voltage,node-anchor:node-anchor,node:node,invert:invert));
         }
       }
     }
@@ -101,7 +106,7 @@
           if (element.name == "R"){
             R(start, end, l-modifier: element.l-modifier, label: element.label, flow: element.flow,voltage: element.voltage)
           } else  if (element.name == "battery1"){
-            battery1(start, end,l-modifier: element.l-modifier, label: element.label)
+            battery1(start, end,l-modifier: element.l-modifier, label: element.label,flow: element.flow,invert:element.invert)
           } else  if (element.name == "short"){
             short(start, end,l-modifier: element.l-modifier, label: element.label)
           } else  if (element.name == "nos"){
