@@ -1,0 +1,9 @@
+[package]
+name = "cyrcuits"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["Flavio Barisi"]
+license = "MIT"
+repository = "https://github.com/flavio20002/cyrcuits"
+exclude = ["docs/assets/*", "*.pdf"]
+description = "Circuitkz parser for Typst"
