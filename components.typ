@@ -190,7 +190,7 @@
   })
 }
 
-#let nos(start, end, l-modifier:"", label:none, name: none, ..style) = {
+#let nos(start, end, l-modifier:"", label:none, name: none,flow: "", ..style) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
@@ -200,6 +200,9 @@
     content-angle = 0deg
   }
   component-content(start,end, l-modifier, label, angle,pad:0.5)
+   if (flow != ""){
+    component-flow(start,end,angle, flow)
+  }
   group(name: name, ctx => {
     rotate(angle, origin: start)
     let component-length = 0.5

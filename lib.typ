@@ -110,7 +110,7 @@
           } else  if (element.name == "short"){
             short(start, end,l-modifier: element.l-modifier, label: element.label)
           } else  if (element.name == "nos"){
-            nos(start, end, l-modifier: element.l-modifier, label: element.label)
+            nos(start, end, l-modifier: element.l-modifier, label: element.label,flow: element.flow)
           } else  if (element.name == "ospst"){
             ospst(start, end, l-modifier: element.l-modifier, label: element.label)
           } else  if (element.name == "C"){
