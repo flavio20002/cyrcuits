@@ -109,6 +109,9 @@
             battery1(start, end,l-modifier: element.l-modifier, label: element.label,flow: element.flow,invert:element.invert)
           } else  if (element.name == "short"){
             short(start, end,l-modifier: element.l-modifier, label: element.label)
+          } 
+          else  if (element.name == "open"){
+            open(start, end,l-modifier: element.l-modifier, label: element.label)
           } else  if (element.name == "nos"){
             nos(start, end, l-modifier: element.l-modifier, label: element.label,flow: element.flow)
           } else  if (element.name == "ospst"){
