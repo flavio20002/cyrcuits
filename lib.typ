@@ -2,19 +2,19 @@
 #import "components.typ" : *
 
 #let parse-circuit(raw_code) = {
-    let code_str = raw_code.text;
-    let lines = code_str.split("\n").filter(line => (line.len()> 0));
+    let code_str = raw_code.text.replace(regex("to\ *\["),"\n to[");
+    let lines = code_str.split("\n").filter(line => (line.trim().len()> 0));
 
     let elements = ()
 
     for line in lines {
         if not line.starts-with("\\begin") and not line.starts-with("\\end") {
-        if line.contains(regex("\\\\draw \((\d+),(\d+)\)")){
-          let drawPoint = raw_code.text.match(regex("\\\\draw \((\d+),(\d+)\)")).captures.map((it) => {int(it)})
+        if line.contains(regex("\\\\draw\ ?\((\d+),(\d+)\)")){
+          let drawPoint = line.match(regex("\\\\draw\ ?\((\d+),(\d+)\)")).captures.map((it) => {int(it)})
           elements.push((name:"point", point: drawPoint))
         }
-        else if line.contains(regex("\\\\draw \(([0-9A-Za-z_]+)\)")){
-          let drawPoint = raw_code.text.match(regex("\\\\draw \(([0-9A-Za-z_]+)\)")).captures.at(0)
+        else if line.contains(regex("\\\\draw\ ?\(([0-9A-Za-z_]+)\)")){
+          let drawPoint = line.match(regex("\\\\draw\ ?\(([0-9A-Za-z_]+)\)")).captures.at(0)
           elements.push((name:"point2", point: drawPoint))
         }
         else if line.contains("node[shape=ground]") {
@@ -63,8 +63,8 @@
               node-left = line.match(regex("(,\s*\*\-)")).captures.at(0)
             }
             
-            if line.contains(regex("coordinate \(([0-9A-Za-z_]+)")){
-               coordinate-name = line.match(regex("coordinate \(([0-9A-Za-z_]+)")).captures.at(0)
+            if line.contains(regex("coordinate\ ?\(([0-9A-Za-z_]+)")){
+               coordinate-name = line.match(regex("coordinate\ ?\(([0-9A-Za-z_]+)")).captures.at(0)
             }
 
             if line.contains(regex("node\[anchor=([0-9A-Za-z]+)\]\{([^,\}]+)\}")){
@@ -75,7 +75,7 @@
                invert = true
             }
             
-            let dest-point = line.match(regex("\+\+\s*\((-?\d+),(-?\d+)\)")).captures.map((it) => {int(it)})
+            let dest-point = line.match(regex("\+\+\s*\((-?\d+),(-?\d+\.?\d?)\)")).captures.map((it) => {float(it)})
             
             elements.push((name: name,l-modifier: l-modifier, label: label,flow: flow,node-right:node-right,node-left:node-left, coordinate-name: coordinate-name, dest-point: dest-point, voltage: voltage,node-anchor:node-anchor,node:node,invert:invert));
         }

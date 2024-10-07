@@ -97,7 +97,7 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  component-content(start,end, l-modifier, label, angle)
+  component-content(start,end, l-modifier, label, angle,pad: 0.4)
   if (flow != ""){
     component-flow(start,end,angle, flow)
   }
@@ -254,7 +254,7 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  component-content(start,end, l-modifier, label, angle,pad:1)
+  component-content(start,end, l-modifier, label, angle,pad:0.7)
   if (flow != ""){
     component-flow(start,end,angle,flow)
   }
@@ -263,20 +263,17 @@
   }
   group(name: name, ctx => {
     rotate(angle, origin: start)
-    let component-length = 0.5
-    let step = 1/6
-    let height = 5/14
-    let sgn = -1
+    let component-length = 0.4
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
     line(
       start,
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
     )
-    line((rel: (0, -0.6)), (rel: (0, 1.2)),)
-    line((rel: (0.5, 0)), (rel: (0, -1.2)),)
+    line((rel: (0, -0.5)), (rel: (0, 1)),)
+    line((rel: (0.4, 0)), (rel: (0, -1)),)
     line(
-      (rel: (0.5+(total-length - component-length)/2, 0), to: start),
+      (rel: (0.4+(total-length - component-length)/2, 0), to: start),
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
     )
@@ -287,7 +284,7 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  component-content(start,end, l-modifier, label, angle,pad:0.5)
+  component-content(start,end, l-modifier, label, angle,pad:0.4)
   if (flow != ""){
     component-flow(start,end,angle,flow)
   }
