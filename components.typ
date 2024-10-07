@@ -164,7 +164,7 @@
   })
 }
 
-#let short(start, end, label:"", name: none, ..style) = {
+#let short(start, end, l-modifier:"", label:"", name: none, ..style) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
@@ -174,7 +174,7 @@
     content-angle = 0deg
   }
   if (label!=""){
-    content( (a: center-point, b: start, number: -0.75, angle: 90deg), angle:content-angle, text(eval(label)))
+    component-content(start,end, l-modifier, label, angle,pad:0.25)
   }
   group(name: name, ctx => {
     rotate(angle, origin: start)
@@ -187,6 +187,32 @@
       start,
       (rel: ((total-length - component-length), 0)),
       fill: none
+    )
+  })
+}
+
+#let open(start, end, l-modifier:"", label:"", name: none, ..style) = {
+    set-style(mark: (fill: black))
+  let (x1,y1,..) = start
+  let (x2,y2,..) = end
+  let angle = calc.atan2(x2 - x1, y2 - y1)
+  let center-point = (start,50%,end)
+  let content-angle = angle
+  if (angle == 0deg or angle == 90deg){
+    content-angle = 0deg
+  }
+  if (label!=""){
+    component-content(start,end, l-modifier, label, angle,pad:0.25)
+  }
+  group(name: name, ctx => {
+    rotate(angle, origin: start)
+    let component-length = 0.5
+    let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
+    line(
+      (rel: (angle:0, radius: 0.25), to: start),
+      (rel: ((total-length - component-length), 0)),
+      fill: none,
+      mark: (end: ">")
     )
   })
 }
