@@ -55,12 +55,17 @@
               (l-modifier,label) = line.match(regex("l(_?)=([^,\]]*)?")).captures
             }
 
-            if line.contains(regex("(,\s*\-\*)")){
-              node-right = line.match(regex("(,\s*\-\*)")).captures.at(0)
+            if line.contains(regex("(,\s*\-[\*o])")){
+              node-right = line.match(regex(",\s*\-([\*o]?)")).captures.at(0)
             }
 
-            if line.contains(regex("(,\s*\*\-)")){
-              node-left = line.match(regex("(,\s*\*\-)")).captures.at(0)
+            if line.contains(regex("(,\s*[\*o]\-)")){
+              node-left = line.match(regex(",\s*([\*o])\-")).captures.at(0)
+            }
+
+            if line.contains(regex("(,\s*[\*o]\-*[\*o])")){
+              node-left = line.match(regex("([\*o])\-")).captures.at(0)
+               node-right = line.match(regex("\-([\*o]?)")).captures.at(0)
             }
             
             if line.contains(regex("coordinate\ ?\(([0-9A-Za-z_]+)")){
@@ -122,12 +127,20 @@
             L(start, end, l-modifier: element.l-modifier, label: element.label, flow: element.flow, voltage: element.voltage)
           }
 
-          if (element.node-left != none){
+          if (element.node-left == "*"){
             node(start)
           }
 
-          if (element.node-right != none){
+          if (element.node-right == "*"){
             node(end)
+          }
+
+          if (element.node-left == "o"){
+            node-empty(start)
+          }
+
+          if (element.node-right == "o"){
+            node-empty(end)
           }
 
           if (element.node != none){

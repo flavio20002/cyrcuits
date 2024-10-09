@@ -349,6 +349,10 @@
   circle(start, radius: 0.075, stroke: black, fill: black)
 }
 
+#let node-empty(start) = {
+  circle(start, radius: 0.075, stroke: black, fill: white)
+}
+
 #let node-content(start,node,node-anchor) = {
   let angle = 90deg
   if (node-anchor == "north"){
