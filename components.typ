@@ -350,7 +350,9 @@
 }
 
 #let node-empty(start) = {
-  circle(start, radius: 0.075, stroke: black, fill: white)
+  on-layer(1, {
+    circle(start, radius: 0.075, stroke: black, fill: white)
+  })
 }
 
 #let node-content(start,node,node-anchor) = {
@@ -359,4 +361,32 @@
     angle = -90deg
   }
   content((rel: (angle: angle, radius: 0.25), to: start),text(eval(node)),anchor: node-anchor)
+}
+
+#let spdt(start,xscale:none,yscale:none,name:none) = {
+  let (x1,y1,..) = start
+  let center-point = (start,50%,end)
+  let content-angle = angle
+  if (angle == 0deg or angle == 90deg){
+    content-angle = 0deg
+  }
+  let in-point = (rel: (0.5, 0.25),to: start)
+  let out-1-point = (rel: (0, 0.5),to: start)
+  let out-2-point = start
+
+  group(name: name, ctx => {
+    line(
+      start,
+      in-point,
+      fill: none
+    )
+    node-empty(in-point)
+    node-empty(out-1-point)
+    node-empty(out-2-point)
+    anchors((
+      "in": in-point,
+      "out 1": out-1-point,
+      "out 2": out-2-point,
+    ))
+  })
 }

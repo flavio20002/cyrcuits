@@ -17,11 +17,19 @@
           let drawPoint = line.match(regex("\\\\draw\ ?\(([0-9A-Za-z_]+)\)")).captures.at(0)
           elements.push((name:"point2", point: drawPoint))
         }
+        else if line.contains(regex("\\\\draw\ ?\(([0-9A-Za-z_\.\ ]+)\)")){
+          let drawPoint = line.match(regex("\\\\draw\ ?\(([0-9A-Za-z_\.\ ]+)\)")).captures.at(0)
+          elements.push((name:"point3", point: drawPoint))
+        }
         else if line.contains("node[shape=ground]") {
             // Parsing nodo di massa
             let coords =  ((0,1),(0,1));
             elements.push(("ground", coords));
-        } else if line.contains("to") {
+        } else if line.contains(regex("node\[([0-9A-Za-z_]+),\ ?(?:xscale=)?(-?\d),\ ?(?:yscale=)?(-?\d)\]\ ?\(([0-9A-Za-z_]+)\)")){
+            let (type,xscale,yscale,component-name) = line.match(regex("node\[([0-9A-Za-z_]+),\ ?(?:xscale=)?(-?\d),\ ?(?:yscale=)?(-?\d)\]\ ?\(([0-9A-Za-z_]+)\)")).captures
+            elements.push((name: "node",type:type, xscale:xscale,yscale:yscale, component-name: component-name));
+        }
+        else if line.contains("to") {
             // Parsing di elementi come resistori, sorgenti, ecc.
 
             let name = ""
@@ -80,7 +88,7 @@
                invert = true
             }
             
-            let dest-point = line.match(regex("\+\+\s*\((-?\d+),(-?\d+\.?\d?)\)")).captures.map((it) => {float(it)})
+            let dest-point = line.match(regex("\+\+\s*\((-?\d+\.?\d?),(-?\d+\.?\d?)\)")).captures.map((it) => {float(it)})
             
             elements.push((name: name,l-modifier: l-modifier, label: label,flow: flow,node-right:node-right,node-left:node-left, coordinate-name: coordinate-name, dest-point: dest-point, voltage: voltage,node-anchor:node-anchor,node:node,invert:invert));
         }
@@ -104,6 +112,15 @@
         } 
         else if (element.name == "point2"){
           start-point = coordinates.at(element.point)
+        }
+        else if (element.name == "point3"){
+          start-point = element.point
+        }
+        else if (element.name == "node"){
+          let (ctx, start) = cetz.coordinate.resolve(ctx,start-point)
+          if (element.type == "spdt"){
+            spdt(start,xscale:element.xscale, yscale:element.yscale,name: element.component-name)
+          } 
         }
         else {
           let (ctx, start, end) = cetz.coordinate.resolve(ctx,start-point, (rel: element.dest-point,to: start-point))
