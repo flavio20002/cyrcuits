@@ -123,50 +123,90 @@
           } 
         }
         else {
-          let (ctx, start, end) = cetz.coordinate.resolve(ctx,start-point, (rel: element.dest-point,to: start-point))
+          //let (ctx, start, end) = cetz.coordinate.resolve(ctx,start-point, (rel: element.dest-point,to: start-point))
+          let start = start-point
+          let end = (rel: element.dest-point,to: start-point)
           start-point = end
           if (element.name == "R"){
-            R(start, end, l-modifier: element.l-modifier, label: element.label, flow: element.flow,voltage: element.voltage)
+            get-ctx(ctx => {
+              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
+              R(st, en, l-modifier: element.l-modifier, label: element.label, flow: element.flow,voltage: element.voltage)
+            })
           } else  if (element.name == "battery1"){
-            battery1(start, end,l-modifier: element.l-modifier, label: element.label,flow: element.flow,invert:element.invert)
+            get-ctx(ctx => {
+              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
+              battery1(st, en,l-modifier: element.l-modifier, label: element.label,flow: element.flow,invert:element.invert)
+            })
           } else  if (element.name == "short"){
-            short(start, end,l-modifier: element.l-modifier, label: element.label)
+            get-ctx(ctx => {
+              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
+              short(st, en,l-modifier: element.l-modifier, label: element.label)
+            })
           } 
           else  if (element.name == "open"){
-            open(start, end,l-modifier: element.l-modifier, label: element.label)
+            get-ctx(ctx => {
+              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
+              open(st, en,l-modifier: element.l-modifier, label: element.label)
+            })
           } else  if (element.name == "nos"){
-            nos(start, end, l-modifier: element.l-modifier, label: element.label,flow: element.flow)
+            get-ctx(ctx => {
+              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
+              nos(st, en, l-modifier: element.l-modifier, label: element.label,flow: element.flow)
+            })
           } else  if (element.name == "ospst"){
-            ospst(start, end, l-modifier: element.l-modifier, label: element.label)
+            get-ctx(ctx => {
+              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
+              ospst(st, en, l-modifier: element.l-modifier, label: element.label)
+            })
           } else  if (element.name == "C"){
-            C(start, end, l-modifier: element.l-modifier, label: element.label, flow: element.flow, voltage: element.voltage)
+            get-ctx(ctx => {
+              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
+              C(st, en, l-modifier: element.l-modifier, label: element.label, flow: element.flow, voltage: element.voltage)
+            })
           } else  if (element.name == "L"){
-            L(start, end, l-modifier: element.l-modifier, label: element.label, flow: element.flow, voltage: element.voltage)
+            get-ctx(ctx => {
+              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
+              L(st, en, l-modifier: element.l-modifier, label: element.label, flow: element.flow, voltage: element.voltage)
+            })
           }
 
           if (element.node-left == "*"){
-            node(start)
+            get-ctx(ctx => {
+              let (ctx, st) = cetz.coordinate.resolve(ctx, start)
+              node(start)
+            })
           }
 
           if (element.node-right == "*"){
-            node(end)
+            get-ctx(ctx => {
+              let (ctx, en) = cetz.coordinate.resolve(ctx, end)
+              node(en)
+            })
           }
 
           if (element.node-left == "o"){
-            node-empty(start)
+            get-ctx(ctx => {
+              let (ctx, st) = cetz.coordinate.resolve(ctx, start)
+              node-empty(start)
+            })
           }
 
           if (element.node-right == "o"){
-            node-empty(end)
+            get-ctx(ctx => {
+              let (ctx, en) = cetz.coordinate.resolve(ctx, end)
+              node-empty(en)
+            })
           }
 
           if (element.node != none){
-            node-content(end,element.node,element.node-anchor)
+            get-ctx(ctx => {
+              let (ctx, en) = cetz.coordinate.resolve(ctx, end)
+              node-content(en,element.node,element.node-anchor)
+            })
           }
           
           if (element.coordinate-name != none){
-            let (ctx, coordinate) = cetz.coordinate.resolve(ctx,())
-            coordinates.insert(element.coordinate-name, coordinate)
+            coordinates.insert(element.coordinate-name, end)
           }
         }
       }
