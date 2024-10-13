@@ -28,15 +28,14 @@
         } else if line.contains(regex("node\[([0-9A-Za-z_]+),\ ?(?:xscale=)?(-?\d),\ ?(?:yscale=)?(-?\d)\]\ ?\(([0-9A-Za-z_]+)\)")){
             let (type,xscale,yscale,component-name) = line.match(regex("node\[([0-9A-Za-z_]+),\ ?(?:xscale=)?(-?\d),\ ?(?:yscale=)?(-?\d)\]\ ?\(([0-9A-Za-z_]+)\)")).captures
             elements.push((name: "node",type:type, xscale:xscale,yscale:yscale, component-name: component-name));
-        }
-        else if line.contains("to") {
+        } else if line.contains(regex("to\ *\[")) {
             // Parsing di elementi come resistori, sorgenti, ecc.
-
             let name = ""
             let l-modifier = ""
             let label = ""
             let voltage = ""
             let flow = ""
+            let flow-config = ""
             let node-right = none
             let node-left = none
             let coordinate-name = none
@@ -51,12 +50,12 @@
               name = line.match(regex("to\[([0-9A-Za-z_]+)")).captures.at(0)
             }
 
-            if line.contains(regex("f(?:>_)?=([^,\]]*)")){
-              flow = line.match(regex("f(?:>_)?=([^,\]]*)")).captures.at(0)
+            if line.contains(regex("f[>_<^]*=([^,\]]*)")){
+              (flow-config, flow) = line.match(regex("f([>_<^]*)=([^,\]]*)")).captures
             }
 
-            if line.contains(regex("v(?:\^)?=([^,\]]*)")){
-              voltage = line.match(regex("v(?:\^)?=([^,\]]*)")).captures.at(0)
+            if line.contains(regex("v[>_<^]*=([^,\]]*)")){
+              voltage = line.match(regex("v[>_<^]*=([^,\]]*)")).captures.at(0)
             }
 
             if line.contains(regex("l(_?)=([^,\]]*)?")){
@@ -90,7 +89,7 @@
             
             let dest-point = line.match(regex("\+\+\s*\((-?\d+\.?\d?),(-?\d+\.?\d?)\)")).captures.map((it) => {float(it)})
             
-            elements.push((name: name,l-modifier: l-modifier, label: label,flow: flow,node-right:node-right,node-left:node-left, coordinate-name: coordinate-name, dest-point: dest-point, voltage: voltage,node-anchor:node-anchor,node:node,invert:invert));
+            elements.push((name: name,l-modifier: l-modifier, label: label,flow: flow,flow-config: flow-config,node-right:node-right,node-left:node-left, coordinate-name: coordinate-name, dest-point: dest-point, voltage: voltage,node-anchor:node-anchor,node:node,invert:invert));
         }
       }
     }
@@ -130,12 +129,12 @@
           if (element.name == "R"){
             get-ctx(ctx => {
               let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              R(st, en, l-modifier: element.l-modifier, label: element.label, flow: element.flow,voltage: element.voltage)
+              R(st, en, element)
             })
           } else  if (element.name == "battery1"){
             get-ctx(ctx => {
               let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              battery1(st, en,l-modifier: element.l-modifier, label: element.label,flow: element.flow,invert:element.invert)
+              battery1(st, en, element)
             })
           } else  if (element.name == "short"){
             get-ctx(ctx => {
@@ -161,12 +160,12 @@
           } else  if (element.name == "C"){
             get-ctx(ctx => {
               let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              C(st, en, l-modifier: element.l-modifier, label: element.label, flow: element.flow, voltage: element.voltage)
+              C(st, en, element)
             })
           } else  if (element.name == "L"){
             get-ctx(ctx => {
               let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              L(st, en, l-modifier: element.l-modifier, label: element.label, flow: element.flow, voltage: element.voltage)
+              L(st, en, element)
             })
           }
 

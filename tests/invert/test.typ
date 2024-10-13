@@ -16,7 +16,7 @@
     to[short,*-] ++ (-2,0);
     \draw (aux1)
     to[short] ++ (2,0) coordinate (aux2)
-    to[battery1,l=$V_C^0$,v^=$v_C$,f>_=$i_C$,invert] ++ (0,-4)
+    to[battery1,l=$V_C^0$,f>_=$i_C$,invert] ++ (0,-4)
     to[short] ++ (-2,0);
 \end{circuitikz}
 ```

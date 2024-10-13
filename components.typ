@@ -39,10 +39,14 @@
   content((a: center-point, b: start, number: padding, angle: 90deg), angle:content-angle, text(eval(label)), anchor: anchor)
 }
 
-#let component-flow(start,end,angle,flow) = {
+#let component-flow(start,end,angle,flow,flow-config:"") = {
+  let angle-arrow = 90deg
+  if (flow-config.contains("_")){
+    angle-arrow = -90deg
+  }
   let center-point-a-temp = (start,10%,end)
   let center-point-a = (rel: (-angle,0.2), to: center-point-a-temp)
-  let center-point-b = (a: center-point-a, b: center-point-a-temp, number: 0.4, angle: -90deg)
+  let center-point-b = (a: center-point-a, b: center-point-a-temp, number: 0.4, angle: angle-arrow)
   let center-point-c = (rel: (angle,0.75), to: center-point-b)
   let center-point = (center-point-b,50%, center-point-c)
   let content-angle = angle
@@ -51,16 +55,26 @@
   set-style(mark: (fill: black))
   line(center-point-b, center-point-c, mark: (end: ">"), name: "line")
   let anchor = "east"
+  let distance = 0.2
   if (angle == 0deg or angle == 90deg or angle == -90deg){
     content-angle = 0deg
   }
 
   if (angle == -90deg){
     anchor = "east"
+  } else if (angle == 0deg){
+    anchor = "north"
+    if (flow-config.contains("_")){
+      anchor = "north"
+    }
+    else{
+      anchor = "south"
+      distance = -0.3
+    }
   } else {
     anchor = "west"
   }
-  content((a: center-point, b: center-point-b, number: 0.2, angle: 90deg), angle:content-angle, text(eval(flow)), anchor: anchor)
+  content((a: center-point, b: center-point-b, number: distance, angle: 90deg), angle:content-angle, text(eval(flow)), anchor: anchor)
 }
 
 #let component-voltage(start,end,angle,voltage,padding:1.5) = {
@@ -93,18 +107,18 @@
   content((a: center-point, b: center-point-b2, number: padding/2, angle: 90deg), angle:content-angle, text(eval(voltage)), anchor: anchor)
 }
 
-#let R(start, end, l-modifier:"", label:none, flow: "", name: none, voltage: "", ..style) = {
+#let R(start, end, element) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  component-content(start,end, l-modifier, label, angle,pad: 0.4)
-  if (flow != ""){
-    component-flow(start,end,angle, flow)
+  component-content(start,end, element.l-modifier, element.label, angle,pad: 0.4)
+  if (element.flow != ""){
+    component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
-  if (voltage != ""){
-    component-voltage(start,end,angle,voltage)
+  if (element.voltage != ""){
+    component-voltage(start,end,angle,element.voltage)
   }
-  group(name: name, ctx => {
+  group(name: element.name, ctx => {
     rotate(angle, origin: start)
     let component-length = 2
     let step = 1/6
@@ -128,15 +142,15 @@
   })
 }
 
-#let battery1(start, end, l-modifier:"", label:none, flow: "", name: none, invert:false, ..style) = {
+#let battery1(start, end, element) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  component-content(start,end, l-modifier, label, angle,pad:0.75)
-  if (flow != ""){
-    component-flow(start,end,angle, flow)
+  component-content(start,end, element.l-modifier, element.label, angle,pad:0.75)
+  if (element.flow != ""){
+    component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
-  group(name: name, ctx => {
+  group(name: element.name, ctx => {
     rotate(angle, origin: start)
     let component-length = 0.25
     let step = 1/6
@@ -148,7 +162,7 @@
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
     )
-    if (invert){
+    if (element.invert){
       line((rel: (0, -0.6)), (rel: (0, 1.2)),)
       line((rel: (0.25, -0.3)), (rel: (0, -0.6)),) 
     }
@@ -227,7 +241,7 @@
     content-angle = 0deg
   }
   component-content(start,end, l-modifier, label, angle,pad:0.5)
-   if (flow != ""){
+  if (flow != ""){
     component-flow(start,end,angle, flow)
   }
   group(name: name, ctx => {
@@ -276,18 +290,18 @@
   })
 }
 
-#let C(start, end, l-modifier:"", label:none, flow: "", voltage: "", name: none, ..style) = {
+#let C(start, end, element) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  component-content(start,end, l-modifier, label, angle,pad:0.7)
-  if (flow != ""){
-    component-flow(start,end,angle,flow)
+  component-content(start,end, element.l-modifier, element.label, angle,pad:0.7)
+  if (element.flow != ""){
+    component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
-  if (voltage != ""){
-    component-voltage(start,end,angle,voltage)
+  if (element.voltage != ""){
+    component-voltage(start,end,angle,element.voltage)
   }
-  group(name: name, ctx => {
+  group(name: element.name, ctx => {
     rotate(angle, origin: start)
     let component-length = 0.4
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
@@ -306,18 +320,18 @@
   })
 }
 
-#let L(start, end, l-modifier:"", label:none, flow: "", voltage: "", name: none, ..style) = {
+#let L(start, end, element) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  component-content(start,end, l-modifier, label, angle,pad:0.4)
-  if (flow != ""){
-    component-flow(start,end,angle,flow)
+  component-content(start,end, element.l-modifier, element.label, angle,pad:0.4)
+  if (element.flow != ""){
+    component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
-  if (voltage != ""){
-    component-voltage(start,end,angle,voltage,padding:1)
+  if (element.voltage != ""){
+    component-voltage(start,end,angle,element.voltage,padding:1)
   }
-  group(name: name, ctx => {
+  group(name: element.name, ctx => {
     rotate(angle, origin: start)
     let component-length = 1
     let radius = 0.14
