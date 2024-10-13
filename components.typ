@@ -41,7 +41,7 @@
 
 #let component-flow(start,end,angle,flow,flow-config:"") = {
   let angle-arrow = 90deg
-  if (flow-config.contains("_")){
+  if ((angle == -90deg or angle == 90deg) and flow-config.contains("_")){
     angle-arrow = -90deg
   }
   let center-point-a-temp = (start,10%,end)
