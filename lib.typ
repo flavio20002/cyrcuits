@@ -136,6 +136,11 @@
               let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
               battery1(st, en, element)
             })
+         } else  if (element.name == "isource"){
+            get-ctx(ctx => {
+              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
+              isource(st, en, element)
+            })
           } else  if (element.name == "short"){
             get-ctx(ctx => {
               let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)

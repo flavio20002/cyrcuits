@@ -154,9 +154,6 @@
   group(name: element.name, ctx => {
     rotate(angle, origin: start)
     let component-length = 0.25
-    let step = 1/6
-    let height = 5/14
-    let sgn = -1
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
     line(
       start,
@@ -173,6 +170,41 @@
     }
     line(
       (rel: (0.25+(total-length - component-length)/2, 0), to: start),
+      (rel: ((total-length - component-length)/2, 0)),
+      fill: none
+    )
+  })
+}
+
+#let isource(start, end, element) = {
+  set-style(mark: (fill: black))
+  let (x1,y1,..) = start
+  let (x2,y2,..) = end
+  let angle = calc.atan2(x2 - x1, y2 - y1)
+  component-content(start,end, element.l-modifier, element.label, angle,pad:0.75)
+  if (element.flow != ""){
+    component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
+  }
+  group(name: element.name, ctx => {
+    rotate(angle, origin: start)
+    let component-length = 1
+    let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
+    line(
+      start,
+      (rel: ((total-length - component-length)/2, 0)),
+      fill: none
+    )
+    if (element.invert){
+     line((rel: (0.9+(total-length - component-length)/2, 0), to: start),(rel: (-0.8,0)), mark: (end: ">"))
+    }
+    else{
+     line((rel: (0.1+(total-length - component-length)/2, 0), to: start),(rel: (0.8,0)), mark: (end: ">"))
+    }
+    circle((rel: (0.5+(total-length - component-length)/2, 0), to: start), radius: 0.5,
+      fill: none
+    )
+    line(
+      (rel: (component-length + (total-length - component-length)/2, 0), to: start),
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
     )
