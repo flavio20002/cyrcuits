@@ -44,7 +44,8 @@
   if ((angle == -90deg or angle == 90deg) and flow-config.contains("_")){
     angle-arrow = -90deg
   }
-  let center-point-a-temp = (start,10%,end)
+  let center-point-a-temp1 = (start,50%,end)
+  let center-point-a-temp = (rel: (angle,- 1), to: center-point-a-temp1)
   let center-point-a = (rel: (-angle,0.2), to: center-point-a-temp)
   let center-point-b = (a: center-point-a, b: center-point-a-temp, number: 0.4, angle: angle-arrow)
   let center-point-c = (rel: (angle,0.75), to: center-point-b)
