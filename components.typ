@@ -371,7 +371,7 @@
 
 #let node-content(start,node,node-anchor) = {
   let angle = 90deg
-  if (node-anchor == "north"){
+  if (node-anchor.contains("north")){
     angle = -90deg
   }
   content((rel: (angle: angle, radius: 0.25), to: start),text(eval(node)),anchor: node-anchor)
@@ -385,8 +385,8 @@
     content-angle = 0deg
   }
   let in-point = (rel: (0.5, 0.25),to: start)
-  let out-1-point = (rel: (0, 0.5),to: start)
-  let out-2-point = start
+  let out-1-point = start
+  let out-2-point = (rel: (0, 0.5),to: start)
 
   group(name: name, ctx => {
     line(

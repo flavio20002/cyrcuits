@@ -79,8 +79,8 @@
                coordinate-name = line.match(regex("coordinate\ ?\(([0-9A-Za-z_]+)")).captures.at(0)
             }
 
-            if line.contains(regex("node\[anchor=([0-9A-Za-z]+)\]\{([^,\}]+)\}")){
-              (node-anchor,node)= line.match(regex("node\[anchor=([0-9A-Za-z]+)\]\{([^,\}]+)\}")).captures
+            if line.contains(regex("node\[anchor=([0-9A-Za-z-]+)\]\{([^,\}]+)\}")){
+              (node-anchor,node)= line.match(regex("node\[anchor=([0-9A-Za-z-]+)\]\{([^,\}]+)\}")).captures
             }
 
             if line.contains(regex(",\s*invert")){
