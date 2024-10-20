@@ -1,10 +1,8 @@
 #import "@preview/cetz:0.3.0"
 
-#import cetz.draw: *
-
 #let anchors(anchors) = {
   for (k, v) in anchors {
-    anchor(k, v)
+    cetz.draw.anchor(k, v)
   }
 }
 
@@ -36,7 +34,7 @@
       anchor = "west"
     }
   }
-  content((a: center-point, b: start, number: padding, angle: 90deg), angle:content-angle, text(eval(label)), anchor: anchor)
+  cetz.draw.content((a: center-point, b: start, number: padding, angle: 90deg), angle:content-angle, text(eval(label)), anchor: anchor)
 }
 
 #let component-flow(start,end,angle,flow,flow-config:"") = {
@@ -53,8 +51,8 @@
   let content-angle = angle
   let (x1,y1,..) = start
   let (x2,y2,..) = end
-  set-style(mark: (fill: black))
-  line(center-point-b, center-point-c, mark: (end: ">"), name: "line")
+  cetz.draw.set-style(mark: (fill: black))
+  cetz.draw.line(center-point-b, center-point-c, mark: (end: ">"), name: "line")
   let anchor = "east"
   let distance = 0.2
   if (angle == 0deg or angle == 90deg or angle == -90deg){
@@ -75,7 +73,7 @@
   } else {
     anchor = "west"
   }
-  content((a: center-point, b: center-point-b, number: distance, angle: 90deg), angle:content-angle, text(eval(flow)), anchor: anchor)
+  cetz.draw.content((a: center-point, b: center-point-b, number: distance, angle: 90deg), angle:content-angle, text(eval(flow)), anchor: anchor)
 }
 
 #let component-voltage(start,end,angle,voltage,padding:1.5) = {
@@ -93,8 +91,8 @@
   let content-angle = angle
   let (x1,y1,..) = start
   let (x2,y2,..) = end
-  set-style(mark: (fill: black))
-  bezier(center-point-b2, center-point-b1, center-point-b, mark: (end: ">"), )
+  cetz.draw.set-style(mark: (fill: black))
+  cetz.draw.bezier(center-point-b2, center-point-b1, center-point-b, mark: (end: ">"), )
   let anchor = "east"
   if (angle == 0deg or angle == 90deg or angle == -90deg){
     content-angle = 0deg
@@ -105,7 +103,7 @@
   } else {
     anchor = "east"
   }
-  content((a: center-point, b: center-point-b2, number: padding/2, angle: 90deg), angle:content-angle, text(eval(voltage)), anchor: anchor)
+  cetz.draw.content((a: center-point, b: center-point-b2, number: padding/2, angle: 90deg), angle:content-angle, text(eval(voltage)), anchor: anchor)
 }
 
 #let R(start, end, element) = {
@@ -119,14 +117,14 @@
   if (element.voltage != ""){
     component-voltage(start,end,angle,element.voltage)
   }
-  group(name: element.name, ctx => {
-    rotate(angle, origin: start)
+  cetz.draw.group(name: element.name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
     let component-length = 2
     let step = 1/6
     let height = 5/14
     let sgn = -1
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
-    line(
+    cetz.draw.line(
       start,
       (rel: ((total-length - component-length)/2, 0)),
       (rel: (0.5, 0)),
@@ -151,24 +149,24 @@
   if (element.flow != ""){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
-  group(name: element.name, ctx => {
-    rotate(angle, origin: start)
+  cetz.draw.group(name: element.name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
     let component-length = 0.25
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
-    line(
+    cetz.draw.line(
       start,
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
     )
     if (element.invert){
-      line((rel: (0, -0.6)), (rel: (0, 1.2)),)
-      line((rel: (0.25, -0.3)), (rel: (0, -0.6)),) 
+      cetz.draw.line((rel: (0, -0.6)), (rel: (0, 1.2)),)
+      cetz.draw.line((rel: (0.25, -0.3)), (rel: (0, -0.6)),) 
     }
     else{
-      line((rel: (0, -0.3)), (rel: (0, 0.6)),)
-      line((rel: (0.25, 0.3)), (rel: (0, -1.2)),)
+      cetz.draw.line((rel: (0, -0.3)), (rel: (0, 0.6)),)
+      cetz.draw.line((rel: (0.25, 0.3)), (rel: (0, -1.2)),)
     }
-    line(
+    cetz.draw.line(
       (rel: (0.25+(total-length - component-length)/2, 0), to: start),
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
@@ -177,7 +175,7 @@
 }
 
 #let isource(start, end, element) = {
-  set-style(mark: (fill: black))
+  cetz.draw.set-style(mark: (fill: black))
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
@@ -185,25 +183,25 @@
   if (element.flow != ""){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
-  group(name: element.name, ctx => {
-    rotate(angle, origin: start)
+  cetz.draw.group(name: element.name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
     let component-length = 1
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
-    line(
+    cetz.draw.line(
       start,
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
     )
     if (element.invert){
-     line((rel: (0.9+(total-length - component-length)/2, 0), to: start),(rel: (-0.8,0)), mark: (end: ">"))
+     cetz.draw.line((rel: (0.9+(total-length - component-length)/2, 0), to: start),(rel: (-0.8,0)), mark: (end: ">"))
     }
     else{
-     line((rel: (0.1+(total-length - component-length)/2, 0), to: start),(rel: (0.8,0)), mark: (end: ">"))
+     cetz.draw.line((rel: (0.1+(total-length - component-length)/2, 0), to: start),(rel: (0.8,0)), mark: (end: ">"))
     }
-    circle((rel: (0.5+(total-length - component-length)/2, 0), to: start), radius: 0.5,
+    cetz.draw.circle((rel: (0.5+(total-length - component-length)/2, 0), to: start), radius: 0.5,
       fill: none
     )
-    line(
+    cetz.draw.line(
       (rel: (component-length + (total-length - component-length)/2, 0), to: start),
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
@@ -223,14 +221,14 @@
   if (label!=""){
     component-content(start,end, l-modifier, label, angle,pad:0.25)
   }
-  group(name: name, ctx => {
-    rotate(angle, origin: start)
+  cetz.draw.group(name: name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
     let component-length = 0
     let step = 1/6
     let height = 5/14
     let sgn = -1
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
-    line(
+    cetz.draw.line(
       start,
       (rel: ((total-length - component-length), 0)),
       fill: none
@@ -239,7 +237,7 @@
 }
 
 #let open(start, end, l-modifier:"", label:"", name: none, ..style) = {
-    set-style(mark: (fill: black))
+  cetz.draw.set-style(mark: (fill: black))
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
@@ -251,11 +249,11 @@
   if (label!=""){
     component-content(start,end, l-modifier, label, angle,pad:0.25)
   }
-  group(name: name, ctx => {
-    rotate(angle, origin: start)
+  cetz.draw.group(name: name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
     let component-length = 0.5
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
-    line(
+    cetz.draw.line(
       (rel: (angle:0, radius: 0.25), to: start),
       (rel: ((total-length - component-length), 0)),
       fill: none,
@@ -277,25 +275,25 @@
   if (flow != ""){
     component-flow(start,end,angle, flow)
   }
-  group(name: name, ctx => {
-    rotate(angle, origin: start)
+  cetz.draw.group(name: name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
     let component-length = 0.5
     let step = 1/6
     let height = 5/14
     let sgn = -1
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
-    line(
+    cetz.draw.line(
       start,
       (rel: ((total-length - component-length)/2, 0)),
       (rel: (0.5, 0.25)),
       fill: none
     )
-    line((rel: (0.5 + (total-length - component-length)/2, 0), to: start), (rel: ((total-length - component-length)/2, 0)))
+    cetz.draw.line((rel: (0.5 + (total-length - component-length)/2, 0), to: start), (rel: ((total-length - component-length)/2, 0)))
   })
 }
 
 #let ospst(start, end, l-modifier:"", label:none, name: none, ..style) = {
-  set-style(mark: (fill: black))
+  cetz.draw.set-style(mark: (fill: black))
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
@@ -305,21 +303,21 @@
     content-angle = 0deg
   }
   component-content(start,end, l-modifier, label, angle,pad:0.5)
-  group(name: name, ctx => {
-    rotate(angle, origin: start)
+  cetz.draw.group(name: name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
     let component-length = 0.5
     let step = 1/6
     let height = 5/14
     let sgn = -1
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
-    line(
+    cetz.draw.line(
       start,
       (rel: ((total-length - component-length)/2, 0)),
       (rel: (0.5, 0.35)),
       fill: none
     )
-    line((rel: (0.5 + (total-length - component-length)/2, 0), to: start), (rel: ((total-length - component-length)/2, 0)))
-    arc((rel: ((total-length - component-length)/2 + component-length/2, 0), to: start), radius: 0.4,start: 0deg, stop: 90deg, mark: (end: ">"))
+    cetz.draw.line((rel: (0.5 + (total-length - component-length)/2, 0), to: start), (rel: ((total-length - component-length)/2, 0)))
+    cetz.draw.arc((rel: ((total-length - component-length)/2 + component-length/2, 0), to: start), radius: 0.4,start: 0deg, stop: 90deg, mark: (end: ">"))
   })
 }
 
@@ -334,18 +332,18 @@
   if (element.voltage != ""){
     component-voltage(start,end,angle,element.voltage)
   }
-  group(name: element.name, ctx => {
-    rotate(angle, origin: start)
+  cetz.draw.group(name: element.name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
     let component-length = 0.4
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
-    line(
+    cetz.draw.line(
       start,
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
     )
-    line((rel: (0, -0.5)), (rel: (0, 1)),)
-    line((rel: (0.4, 0)), (rel: (0, -1)),)
-    line(
+    cetz.draw.line((rel: (0, -0.5)), (rel: (0, 1)),)
+    cetz.draw.line((rel: (0.4, 0)), (rel: (0, -1)),)
+    cetz.draw.line(
       (rel: (0.4+(total-length - component-length)/2, 0), to: start),
       (rel: ((total-length - component-length)/2, 0)),
       fill: none
@@ -364,26 +362,26 @@
   if (element.voltage != ""){
     component-voltage(start,end,angle,element.voltage,padding:1)
   }
-  group(name: element.name, ctx => {
-    rotate(angle, origin: start)
+  cetz.draw.group(name: element.name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
     let component-length = 1
     let radius = 0.14
     let height = 5/14
     let start-angle = 230deg
     let stop-angle = -50deg
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
-    merge-path({
-      line(
+    cetz.draw.merge-path({
+      cetz.draw.line(
         start,
         (rel: ((total-length - component-length)/2, 0)),
         fill: none
       )
-      arc((), start: 180deg, stop: stop-angle, radius: radius, name: "arc1")
-      arc("arc1.end", start: start-angle, stop: stop-angle, radius: radius, name: "arc2")
-      arc("arc2.end", start: start-angle, stop: stop-angle, radius: radius, name: "arc3")
-      arc("arc3.end", start: start-angle, stop: stop-angle, radius: radius, name: "arc4")
-      arc("arc4.end", start: start-angle, stop: 0deg, radius: radius, name: "arc5")
-      line(
+      cetz.draw.arc((), start: 180deg, stop: stop-angle, radius: radius, name: "arc1")
+      cetz.draw.arc("arc1.end", start: start-angle, stop: stop-angle, radius: radius, name: "arc2")
+      cetz.draw.arc("arc2.end", start: start-angle, stop: stop-angle, radius: radius, name: "arc3")
+      cetz.draw.arc("arc3.end", start: start-angle, stop: stop-angle, radius: radius, name: "arc4")
+      cetz.draw.arc("arc4.end", start: start-angle, stop: 0deg, radius: radius, name: "arc5")
+      cetz.draw.line(
         (rel: (1+(total-length - component-length)/2, 0), to: start),
         (rel: ((total-length - component-length)/2, 0)),
         fill: none
@@ -393,12 +391,12 @@
 }
 
 #let node(start) = {
-  circle(start, radius: 0.075, stroke: black, fill: black)
+  cetz.draw.circle(start, radius: 0.075, stroke: black, fill: black)
 }
 
 #let node-empty(start) = {
-  on-layer(1, {
-    circle(start, radius: 0.075, stroke: black, fill: white)
+  cetz.draw.on-layer(1, {
+    cetz.draw.circle(start, radius: 0.075, stroke: black, fill: white)
   })
 }
 
@@ -407,7 +405,7 @@
   if (node-anchor.contains("north")){
     angle = -90deg
   }
-  content((rel: (angle: angle, radius: 0.25), to: start),text(eval(node)),anchor: node-anchor)
+  cetz.draw.content((rel: (angle: angle, radius: 0.25), to: start),text(eval(node)),anchor: node-anchor)
 }
 
 #let spdt(start,xscale:none,yscale:none,name:none) = {
@@ -421,8 +419,8 @@
   let out-1-point = start
   let out-2-point = (rel: (0, 0.5),to: start)
 
-  group(name: name, ctx => {
-    line(
+  cetz.draw.group(name: name, ctx => {
+    cetz.draw.line(
       start,
       in-point,
       fill: none
