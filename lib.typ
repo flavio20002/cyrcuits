@@ -1,4 +1,4 @@
-#import "@preview/cetz:0.3.0"
+#import "@preview/cetz:0.3.1"
 #import "components.typ" : *
 
 #let parse-circuit(raw_code) = {
