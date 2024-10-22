@@ -43,10 +43,10 @@
     angle-arrow = -90deg
   }
   let center-point-a-temp1 = (start,50%,end)
-  let center-point-a-temp = (rel: (angle,- 1.2), to: center-point-a-temp1)
+  let center-point-a-temp = (rel: (angle,- 1.1), to: center-point-a-temp1)
   let center-point-a = (rel: (-angle,0.2), to: center-point-a-temp)
   let center-point-b = (a: center-point-a, b: center-point-a-temp, number: 0.3, angle: angle-arrow)
-  let center-point-c = (rel: (angle,0.75), to: center-point-b)
+  let center-point-c = (rel: (angle,0.7), to: center-point-b)
   let center-point = (center-point-b,50%, center-point-c)
   let content-angle = angle
   let (x1,y1,..) = start
