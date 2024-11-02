@@ -218,8 +218,9 @@
   })
 }
 
-#let cyrcuits(scale:1, doc) = [
+#let cyrcuits(scale:1, doc, text-size:none) = [
   #show raw.where(lang: "circuitkz") : it => [
+    #set text(size: text-size) if text-size != none
     #draw-circuit(scale, it)
   ]
   #doc
