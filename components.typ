@@ -62,9 +62,9 @@
   if (angle == -90deg){
     anchor = "east"
   } else if (angle == 0deg){
-    anchor = "north"
     if (flow-config.contains("_")){
       anchor = "north"
+      distance = 0.3
     }
     else{
       anchor = "south"
