@@ -110,7 +110,9 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  component-content(start,end, element.l-modifier, element.label, angle,pad: 0.4)
+  if (element.label != ""){
+    component-content(start,end, element.l-modifier, element.label, angle,pad: 0.4)
+  }
   if (element.flow != ""){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
