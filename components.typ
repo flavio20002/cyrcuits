@@ -147,7 +147,9 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  component-content(start,end, element.l-modifier, element.label, angle,pad:0.75)
+  if (element.label != ""){
+    component-content(start,end, element.l-modifier, element.label, angle,pad:0.75)
+  }
   if (element.flow != ""){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
@@ -181,7 +183,9 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  component-content(start,end, element.l-modifier, element.label, angle,pad:0.75)
+  if (element.label != ""){
+    component-content(start,end, element.l-modifier, element.label, angle,pad:0.75)
+  }
   if (element.flow != ""){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
@@ -273,7 +277,9 @@
   if (angle == 0deg or angle == 90deg){
     content-angle = 0deg
   }
-  component-content(start,end, l-modifier, label, angle,pad:0.5)
+  if (label != ""){
+    component-content(start,end, l-modifier, label, angle,pad:0.5)
+  }
   if (flow != ""){
     component-flow(start,end,angle, flow)
   }
@@ -304,7 +310,9 @@
   if (angle == 0deg or angle == 90deg){
     content-angle = 0deg
   }
-  component-content(start,end, l-modifier, label, angle,pad:0.5)
+  if (label != ""){
+    component-content(start,end, l-modifier, label, angle,pad:0.5)
+  }
   cetz.draw.group(name: name, ctx => {
     cetz.draw.rotate(angle, origin: start)
     let component-length = 0.5
@@ -327,7 +335,9 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  component-content(start,end, element.l-modifier, element.label, angle,pad:0.7)
+  if (element.label != ""){
+    component-content(start,end, element.l-modifier, element.label, angle,pad:0.7)
+  }
   if (element.flow != ""){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
@@ -357,7 +367,9 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  component-content(start,end, element.l-modifier, element.label, angle,pad:0.4)
+  if (element.label != ""){
+    component-content(start,end, element.l-modifier, element.label, angle,pad:0.4)
+  }
   if (element.flow != ""){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
