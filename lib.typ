@@ -87,7 +87,7 @@
                invert = true
             }
             
-            let dest-point = line.match(regex("\+\+\s*\((-?\d+\.?\d?),(-?\d+\.?\d?)\)")).captures.map((it) => {float(it)})
+            let dest-point = line.match(regex("\+\+\s*\((-?\d+\.?\d*),(-?\d+\.?\d*)\)")).captures.map((it) => {float(it)})
             
             elements.push((name: name,l-modifier: l-modifier, label: label,flow: flow,flow-config: flow-config,node-right:node-right,node-left:node-left, coordinate-name: coordinate-name, dest-point: dest-point, voltage: voltage,node-anchor:node-anchor,node:node,invert:invert));
         }
