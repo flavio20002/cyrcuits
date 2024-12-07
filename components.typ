@@ -37,14 +37,23 @@
   cetz.draw.content((a: center-point, b: start, number: padding, angle: 90deg), angle:content-angle, text(eval(label)), anchor: anchor)
 }
 
-#let component-flow(start,end,angle,flow,flow-config:"") = {
+#let component-flow(start,end,angle,flow,flow-config:"",center:false) = {
+  let (x1,y1,..) = start
+  let (x2,y2,..) = end
+  let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
   let angle-arrow = 90deg
   if ((angle == -90deg or angle == 90deg) and flow-config.contains("_")){
     angle-arrow = -90deg
   }
   let center-point-a-temp1 = (start,50%,end)
   let center-point-a-temp = (rel: (angle,- 1.1), to: center-point-a-temp1)
-  let center-point-a = (rel: (-angle,0.2), to: center-point-a-temp)
+  let center-point-a
+  if (center){
+    center-point-a = (rel: (-angle,total-length/2 - 0.2), to: center-point-a-temp)
+  }
+  else{
+    center-point-a = (rel: (-angle, 0.2), to: center-point-a-temp)
+  }
   let center-point-b = (a: center-point-a, b: center-point-a-temp, number: 0.3, angle: angle-arrow)
   let center-point-c = (rel: (angle,0.7), to: center-point-b)
   let center-point = (center-point-b,50%, center-point-c)
@@ -215,7 +224,7 @@
   })
 }
 
-#let short(start, end, l-modifier:"", label:"", name: none, ..style) = {
+#let short(start, end, element) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
@@ -224,10 +233,10 @@
   if (angle == 0deg or angle == 90deg){
     content-angle = 0deg
   }
-  if (label!=""){
-    component-content(start,end, l-modifier, label, angle,pad:0.25)
+  if (element.flow != ""){
+    component-flow(start,end,angle, element.flow, flow-config: element.flow-config, center: true)
   }
-  cetz.draw.group(name: name, ctx => {
+  cetz.draw.group(name: element.name, ctx => {
     cetz.draw.rotate(angle, origin: start)
     let component-length = 0
     let step = 1/6

@@ -144,7 +144,7 @@
           } else  if (element.name == "short"){
             get-ctx(ctx => {
               let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              short(st, en,l-modifier: element.l-modifier, label: element.label)
+              short(st, en, element)
             })
           } 
           else  if (element.name == "open"){
