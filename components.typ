@@ -152,6 +152,44 @@
   })
 }
 
+
+#let generic(start, end, element) = {
+  let (x1,y1,..) = start
+  let (x2,y2,..) = end
+  let angle = calc.atan2(x2 - x1, y2 - y1)
+  if (element.label != ""){
+    component-content(start,end, element.l-modifier, element.label, angle,pad: 0.4)
+  }
+  if (element.flow != ""){
+    component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
+  }
+  if (element.voltage != ""){
+    component-voltage(start,end,angle,element.voltage)
+  }
+  cetz.draw.group(name: element.name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
+    let component-length = 2
+    let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
+    cetz.draw.line(
+      start,
+      (rel: ((total-length - component-length)/2, 0)),
+      (rel: (0.5, 0)),
+      (rel: (0,0.25)),
+      (rel: (1,0)),
+      (rel: (0,-0.5)),
+      (rel: (-1,0)),
+      (rel: (0,0.25)),
+      fill: none
+    )
+    cetz.draw.line(
+      (rel: (1,0)),
+      (rel: (0.5, 0)),
+      (rel: ((total-length - component-length)/2, 0)),
+    )
+  })
+}
+
+
 #let battery1(start, end, element) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end

@@ -131,6 +131,11 @@
               let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
               R(st, en, element)
             })
+          } else if (element.name == "generic"){
+            get-ctx(ctx => {
+              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
+              generic(st, en, element)
+            })
           } else  if (element.name == "battery1"){
             get-ctx(ctx => {
               let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
