@@ -64,7 +64,7 @@
   cetz.draw.line(center-point-b, center-point-c, mark: (end: ">"), name: "line")
   let anchor = "east"
   let distance = 0.2
-  if (angle == 0deg or angle == 90deg or angle == -90deg){
+  if (angle == 0deg or angle == 90deg or angle == -90deg or angle == 180deg){
     content-angle = 0deg
   }
 
@@ -79,6 +79,9 @@
       anchor = "south"
       distance = -0.3
     }
+  }  else if (angle == 180deg){
+      anchor = "south"
+      distance = 0.2
   } else {
     anchor = "west"
   }
