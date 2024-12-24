@@ -52,7 +52,7 @@
     center-point-a = (rel: (-angle,total-length/2 - 0.2), to: center-point-a-temp)
   }
   else{
-    center-point-a = (rel: (-angle, 0.2), to: center-point-a-temp)
+    center-point-a = (rel: (-angle, 0.01), to: center-point-a-temp)
   }
   let center-point-b = (a: center-point-a, b: center-point-a-temp, number: 0.3, angle: angle-arrow)
   let center-point-c = (rel: (angle,0.7), to: center-point-b)
