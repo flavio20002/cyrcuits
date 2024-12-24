@@ -40,7 +40,7 @@
 #let component-flow(start,end,angle,flow,flow-config:"",center:false) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end
-  let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
+  let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2)) - 0.7
   let angle-arrow = 90deg
   if ((angle == -90deg or angle == 90deg) and flow-config.contains("_")){
     angle-arrow = -90deg
@@ -49,7 +49,7 @@
   let center-point-a-temp = (rel: (angle,- 1.1), to: center-point-a-temp1)
   let center-point-a
   if (center){
-    center-point-a = (rel: (-angle,total-length/2 - 0.2), to: center-point-a-temp)
+    center-point-a = (rel: (angle,total-length/2), to: center-point-a-temp)
   }
   else{
     center-point-a = (rel: (-angle, 0.01), to: center-point-a-temp)
