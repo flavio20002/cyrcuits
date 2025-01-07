@@ -69,7 +69,14 @@
   }
 
   if (angle == -90deg){
-    anchor = "east"
+     if (flow-config.contains("_")){
+      anchor = "east"
+      distance = 0.2
+    }
+    else{
+      anchor = "west"
+      distance = -0.2
+    }
   } else if (angle == 0deg){
     if (flow-config.contains("_")){
       anchor = "north"
@@ -177,11 +184,11 @@
       start,
       (rel: ((total-length - component-length)/2, 0)),
       (rel: (0.5, 0)),
-      (rel: (0,0.25)),
+      (rel: (0,0.2)),
       (rel: (1,0)),
-      (rel: (0,-0.5)),
+      (rel: (0,-0.4)),
       (rel: (-1,0)),
-      (rel: (0,0.25)),
+      (rel: (0,0.2)),
       fill: none
     )
     cetz.draw.line(
