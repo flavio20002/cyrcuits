@@ -480,16 +480,9 @@
 }
 
 #let spdt(start,xscale:none,yscale:none,name:none) = {
-  let (x1,y1,..) = start
-  let center-point = (start,50%,end)
-  let content-angle = angle
-  if (angle == 0deg or angle == 90deg){
-    content-angle = 0deg
-  }
   let in-point = (rel: (0.5, 0.25),to: start)
   let out-1-point = start
   let out-2-point = (rel: (0, 0.5),to: start)
-
   cetz.draw.group(name: name, ctx => {
     cetz.draw.line(
       start,
@@ -503,6 +496,33 @@
       "in": in-point,
       "out 1": out-1-point,
       "out 2": out-2-point,
+    ))
+  })
+}
+
+#let op-amp(start,xscale:none,yscale:none,name:none) = {
+  let in-point = (rel: (0.5, 0.25),to: start)
+  let out-1-point = start
+  let out-2-point = (rel: (0, 0.5),to: start)
+
+  cetz.draw.group(name: name, ctx => {
+    cetz.draw.line((rel: (-1.5,0.4),to: start), (rel:(0.7,0)))
+    cetz.draw.line((rel: (-1.5,-0.4),to: start), (rel:(0.7,-0)))
+    cetz.draw.line((rel: (0.8,0),to: start), (rel:(0.7,0)))
+    cetz.draw.line(
+      (rel: (0.8,0),to: start),
+      (rel: (-1.6, -1)),
+      (rel: (0, 2)),
+      close: true
+    )
+    cetz.draw.content((rel:(-0.55, 0.45),to: start), text(size: 1em, [*--*]))
+    cetz.draw.content((rel:(-0.55, -0.4),to: start), text(size: 1em, [*+*]))
+    anchors((
+      "in1": (rel:(-1.5, 0.4), to:start),
+      "in2": (rel:(-1.5, -0.4), to:start),
+      "out": (rel:(1.5, 0), to:start),
+      "vcc1": (rel:(0, 0.5), to:start),
+      "vcc2": (rel:(0, -0.5), to:start),
     ))
   })
 }

@@ -25,8 +25,8 @@
             // Parsing nodo di massa
             let coords =  ((0,1),(0,1));
             elements.push(("ground", coords));
-        } else if line.contains(regex("node\[([0-9A-Za-z_]+),\ ?(?:xscale=)?(-?\d),\ ?(?:yscale=)?(-?\d)\]\ ?\(([0-9A-Za-z_]+)\)")){
-            let (type,xscale,yscale,component-name) = line.match(regex("node\[([0-9A-Za-z_]+),\ ?(?:xscale=)?(-?\d),\ ?(?:yscale=)?(-?\d)\]\ ?\(([0-9A-Za-z_]+)\)")).captures
+        } else if line.contains(regex("node\[([0-9A-Za-z_ ]+),?\ ?(?:xscale=)?(-?\d)?,?\ ?(?:yscale=)?(-?\d)?\]\ ?\(([0-9A-Za-z_]+)\)")){
+            let (type,xscale,yscale,component-name) = line.match(regex("node\[([0-9A-Za-z_ ]+),?\ ?(?:xscale=)?(-?\d)?,?\ ?(?:yscale=)?(-?\d)?\]\ ?\(([0-9A-Za-z_]+)\)")).captures
             elements.push((name: "node",type:type, xscale:xscale,yscale:yscale, component-name: component-name));
         } else if line.contains(regex("to\ *\[")) {
             // Parsing di elementi come resistori, sorgenti, ecc.
@@ -119,6 +119,9 @@
           let (ctx, start) = cetz.coordinate.resolve(ctx,start-point)
           if (element.type == "spdt"){
             spdt(start,xscale:element.xscale, yscale:element.yscale,name: element.component-name)
+          }
+          else if (element.type == "op amp"){
+            op-amp(start,xscale:element.xscale, yscale:element.yscale,name: element.component-name)
           } 
         }
         else {
