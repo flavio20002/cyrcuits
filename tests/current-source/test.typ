@@ -8,11 +8,13 @@
 
 ```circuitkz
   \begin{circuitikz}
-      \draw (0,0)
+     \draw (0,0)
       to[R=$R_1$] ++ (0,2)
       to[battery1,l=$E$] ++ (0,2)
-      to[short,-*] ++ (2,0) node[anchor=north-east]{$A quad$} coordinate (aux1)
-      to[isource=$I_G$,invert] ++ (0,-4) node[anchor=south-east]{$B quad$}
+      to[short,-*] ++ (2,0) coordinate (aux1)
+      node[above]{$A$} 
+      to[isource=$I_G$,invert] ++ (0,-4)
+      node[below]{$B$}
       to[short,*-] ++ (-2,0);
       \draw (aux1)
       to[R=$R_2$] ++ (2,0)
