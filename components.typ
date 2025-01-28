@@ -518,8 +518,8 @@
       (rel: (0, 2)),
       close: true
     )
-    cetz.draw.content((rel:(-0.55, 0.45),to: in-point), text(size: 1em, [*--*]))
-    cetz.draw.content((rel:(-0.55, -0.4),to: in-point), text(size: 1em, [*+*]))
+    cetz.draw.content((rel:(-0.55, 0.45),to: in-point), text(size: 0.75em, [--]))
+    cetz.draw.content((rel:(-0.55, -0.4),to: in-point), text(size: 0.75em, [+]))
     anchors((
       "in1": (rel:(-1.5, 0.4), to:in-point),
       "in2": (rel:(-1.5, -0.4), to:in-point),
@@ -532,10 +532,10 @@
 
 #let above(start,element) = {
   let in-point = start
-   cetz.draw.content((rel:(0, 0.25),to: start), text(eval(element.caption)), anchor: "south")
+   cetz.draw.content((rel:(0, 0.25),to: start), text(size: 0.75em, eval(element.caption)), anchor: "south")
 }
 
 #let below(start,element) = {
   let in-point = start
-   cetz.draw.content((rel:(0, -0.25),to: start), text(eval(element.caption)), anchor: "north")
+   cetz.draw.content((rel:(0, -0.25),to: start), text(size: 0.75em, eval(element.caption)), anchor: "north")
 }
