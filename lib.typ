@@ -20,11 +20,6 @@
         else if line.contains(regex("\\\\draw\ ?\(([0-9A-Za-z_\.\ ]+)\)")){
           let drawPoint = line.match(regex("\\\\draw\ ?\(([0-9A-Za-z_\.\ ]+)\)")).captures.at(0)
           elements.push((name:"point3", point: drawPoint))
-        }
-        else if line.contains("node[shape=ground]") {
-            // Parsing nodo di massa
-            let coords =  ((0,1),(0,1));
-            elements.push(("ground", coords));
         } else if line.contains(regex("node\[([0-9A-Za-z_ ]+),?\ ?(?:xscale=)?(-?\d)?,?\ ?(?:yscale=)?(-?\d)?,?\ ?(?:anchor=)?(.*)?\]\ ?\(?([0-9A-Za-z_]*)\)?\ ?\{([^,]*)\}")){
             let (type,xscale,yscale,anchor,component-name,caption) = line.match(regex("node\[([0-9A-Za-z_ ]+),?\ ?(?:xscale=)?(-?\d)?,?\ ?(?:yscale=)?(-?\d)?,?\ ?(?:anchor=)?(.*)?\]\ ?\(?([0-9A-Za-z_]*)\)?\ ?\{([^,]*)\}")).captures
             elements.push((name: "node",type:type, xscale:xscale,yscale:yscale, component-name: component-name, anchor:anchor,caption:caption));
@@ -126,6 +121,12 @@
             get-ctx(ctx => {
               let (ctx, st) = cetz.coordinate.resolve(ctx, start-point)
               op-amp(st,element)
+            })
+          }
+          else if (element.type == "ground"){
+            get-ctx(ctx => {
+              let (ctx, st) = cetz.coordinate.resolve(ctx, start-point)
+              ground(st,element)
             })
           }
           else if (element.type == "above"){
