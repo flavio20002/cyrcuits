@@ -299,7 +299,7 @@
   })
 }
 
-#let open(start, end, l-modifier:"", label:"", name: none, ..style) = {
+#let open(start, end, element) = {
   cetz.draw.set-style(mark: (fill: black))
   let (x1,y1,..) = start
   let (x2,y2,..) = end
@@ -310,18 +310,28 @@
     content-angle = 0deg
   }
   if (label!=""){
-    component-content(start,end, l-modifier, label, angle,pad:0.25)
+    component-content(start,end, element.l-modifier, element.label, angle, pad:0.25)
   }
-  cetz.draw.group(name: name, ctx => {
+  cetz.draw.group(name: element.name, ctx => {
     cetz.draw.rotate(angle, origin: start)
     let component-length = 0.5
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
-    cetz.draw.line(
-      (rel: (angle:0, radius: 0.25), to: start),
-      (rel: ((total-length - component-length), 0)),
-      fill: none,
-      mark: (end: ">")
-    )
+    if (element.invert){
+      cetz.draw.line(
+        (rel: (angle:0, radius: (total-length - component-length) + 0.25), to: start),
+        (rel: (-total-length + component-length, 0)),
+        fill: none,
+        mark: (end: ">")
+      )
+    }
+    else{
+      cetz.draw.line(
+        (rel: (angle:0, radius: 0.25), to: start),
+        (rel: ((total-length - component-length), 0)),
+        fill: none,
+        mark: (end: ">")
+      )
+    }
   })
 }
 
@@ -553,10 +563,9 @@
 
 #let ground(start,element) = {
   let in-point = start
-  cetz.draw.line(start, (rel:(0, -1)))
-  cetz.draw.line((rel:(-0.3,-1), to: start), (rel:(0.3,-1), to: start))
-  cetz.draw.line((rel:(-0.2,-1.1), to: start), (rel:(0.2,-1.1), to: start))
-  cetz.draw.line((rel:(-0.1,-1.2), to: start), (rel:(0.1,-1.2), to: start))
+  cetz.draw.line((rel:(-0.3,0), to: start), (rel:(0.3,0), to: start))
+  cetz.draw.line((rel:(-0.2,-0.1), to: start), (rel:(0.2,-0.1), to: start))
+  cetz.draw.line((rel:(-0.1,-0.2), to: start), (rel:(0.1,-0.2), to: start))
 }
 
 

@@ -188,7 +188,7 @@
           else  if (element.name == "open"){
             get-ctx(ctx => {
               let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              open(st, en,l-modifier: element.l-modifier, label: element.label)
+              open(st, en, element)
             })
           } else  if (element.name == "nos"){
             get-ctx(ctx => {
