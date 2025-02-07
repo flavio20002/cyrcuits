@@ -513,15 +513,15 @@
 #let op-amp(start,element) = {
   let in-point = start
   if (element.anchor == "+") {
-    in-point = (rel: (1.5, 0.5),to: start)
+    in-point = (rel: (1.3, 0.5),to: start)
   }
   if (element.anchor == "-") {
-    in-point = (rel: (1.5, -0.5),to: start)
+    in-point = (rel: (1.3, -0.5),to: start)
   }
   cetz.draw.group(name: element.component-name, ctx => {
-    cetz.draw.line((rel: (-1.5,0.5),to: in-point), (rel:(0.7,0)))
-    cetz.draw.line((rel: (-1.5,-0.5),to: in-point), (rel:(0.7,-0)))
-    cetz.draw.line((rel: (0.8,0),to: in-point), (rel:(0.7,0)))
+    cetz.draw.line((rel: (-1.3,0.5),to: in-point), (rel:(0.5,0)))
+    cetz.draw.line((rel: (-1.3,-0.5),to: in-point), (rel:(0.5,-0)))
+    cetz.draw.line((rel: (0.8,0),to: in-point), (rel:(0.5,0)))
     cetz.draw.line(
       (rel: (0.8,0),to: in-point),
       (rel: (-1.6, -1)),
@@ -531,9 +531,9 @@
     cetz.draw.content((rel:(-0.55, 0.5),to: in-point), text(size: 1em, [--]))
     cetz.draw.content((rel:(-0.55, -0.5),to: in-point), text(size: 1em, [+]))
     anchors((
-      "in1": (rel:(-1.5, 0.5), to:in-point),
-      "in2": (rel:(-1.5, -0.5), to:in-point),
-      "out": (rel:(1.5, 0), to:in-point),
+      "in1": (rel:(-1.3, 0.5), to:in-point),
+      "in2": (rel:(-1.3, -0.5), to:in-point),
+      "out": (rel:(1.3, 0), to:in-point),
       "vcc1": (rel:(0, 0.5), to:in-point),
       "vcc2": (rel:(0, -0.5), to:in-point),
     ))
