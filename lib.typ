@@ -139,6 +139,18 @@
               let (ctx, st) = cetz.coordinate.resolve(ctx, start-point)
               below(st,element)
             })
+          }
+          else if (element.type == "right"){
+            get-ctx(ctx => {
+              let (ctx, st) = cetz.coordinate.resolve(ctx, start-point)
+              right(st,element)
+            })
+          }
+          else if (element.type == "left"){
+            get-ctx(ctx => {
+              let (ctx, st) = cetz.coordinate.resolve(ctx, start-point)
+              left(st,element)
+            })
           } 
         }
         else {
