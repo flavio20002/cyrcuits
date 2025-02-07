@@ -220,12 +220,12 @@
       fill: none
     )
     if (element.invert){
-      cetz.draw.line((rel: (0, -0.6)), (rel: (0, 1.2)),)
-      cetz.draw.line((rel: (0.25, -0.3)), (rel: (0, -0.6)),) 
+      cetz.draw.line((rel: (0, -0.5)), (rel: (0, 1)),)
+      cetz.draw.line((rel: (0.25, -0.25)), (rel: (0, -0.5)),) 
     }
     else{
-      cetz.draw.line((rel: (0, -0.3)), (rel: (0, 0.6)),)
-      cetz.draw.line((rel: (0.25, 0.3)), (rel: (0, -1.2)),)
+      cetz.draw.line((rel: (0, -0.25)), (rel: (0, 0.5)),)
+      cetz.draw.line((rel: (0.25, 0.25)), (rel: (0, -1)),)
     }
     cetz.draw.line(
       (rel: (0.25+(total-length - component-length)/2, 0), to: start),
