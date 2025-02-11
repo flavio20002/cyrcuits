@@ -235,6 +235,38 @@
   })
 }
 
+#let sV(start, end, element) = {
+  let (x1,y1,..) = start
+  let (x2,y2,..) = end
+  let angle = calc.atan2(x2 - x1, y2 - y1)
+  if (element.label != ""){
+    component-content(start,end, element.l-modifier, element.label, angle,pad:0.75)
+  }
+  if (element.flow != ""){
+    component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
+  }
+  cetz.draw.group(name: element.name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
+    let component-length = 1
+    let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
+    cetz.draw.line(
+      start,
+      (rel: ((total-length - component-length)/2, 0)),
+      fill: none
+    )
+    cetz.draw.circle((rel: (0.5, 0)), radius: 0.5, stroke: black)
+    cetz.draw.merge-path({
+      cetz.draw.arc((rel: (0, 0.2)),start: 45deg, stop: -45deg, radius: 0.15, name: "path1")
+      cetz.draw.arc("path1.end", stop: 225deg, start: 135deg, radius: 0.15)
+    })
+    cetz.draw.line(
+      (rel: (1+(total-length - component-length)/2, 0), to: start),
+      (rel: ((total-length - component-length)/2, 0)),
+      fill: none
+    )
+  })
+}
+
 #let isource(start, end, element) = {
   cetz.draw.set-style(mark: (fill: black))
   let (x1,y1,..) = start
@@ -316,7 +348,7 @@
     cetz.draw.rotate(angle, origin: start)
     let component-length = 0.5
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
-    if (element.invert){
+if (element.invert){
       cetz.draw.line(
         (rel: (angle:0, radius: (total-length - component-length) + 0.25), to: start),
         (rel: (-total-length + component-length, 0)),
@@ -325,13 +357,13 @@
       )
     }
     else{
-      cetz.draw.line(
-        (rel: (angle:0, radius: 0.25), to: start),
-        (rel: ((total-length - component-length), 0)),
-        fill: none,
-        mark: (end: ">")
-      )
-    }
+    cetz.draw.line(
+      (rel: (angle:0, radius: 0.25), to: start),
+      (rel: ((total-length - component-length), 0)),
+      fill: none,
+      mark: (end: ">")
+    )
+}
   })
 }
 
