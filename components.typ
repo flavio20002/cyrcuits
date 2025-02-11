@@ -9,9 +9,10 @@
 #let component-content(start,end, l-modifier, label, angle,pad: 0.5) = {
   let center-point = (start,50%,end)
   let content-angle = angle
+  let pad-angle = 90deg
   let padding = -1*pad
   let anchor = "east"
-  if (angle == 0deg or angle == 90deg or angle == -90deg){
+  if (angle == 0deg or angle == 180deg or angle == 90deg or angle == -90deg){
     content-angle = 0deg
   }
 
@@ -27,14 +28,23 @@
       padding = pad
       anchor = "north"
     }
-  }else {
+  } else if (angle == 180deg){ 
+    anchor = "south"
+    pad-angle = -90deg
+    if (l-modifier != ""){
+      padding = pad
+      anchor = "north"
+    }
+  
+  }
+  else {
     anchor = "east"
     if (l-modifier != ""){
       padding = pad
       anchor = "west"
     }
   }
-  cetz.draw.content((a: center-point, b: start, number: padding, angle: 90deg), angle:content-angle, text(eval(label)), anchor: anchor)
+  cetz.draw.content((a: center-point, b: start, number: padding, angle: pad-angle), angle:content-angle, text(eval(label)), anchor: anchor)
 }
 
 #let component-flow(start,end,angle,flow,flow-config:"",center:false) = {
