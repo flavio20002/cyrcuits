@@ -71,7 +71,12 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   cetz.draw.set-style(mark: (fill: black))
-  cetz.draw.line(center-point-b, center-point-c, mark: (end: ">"), name: "line")
+  if (flow-config.contains("<")){
+    cetz.draw.line(center-point-c, center-point-b, mark: (end: ">"), name: "line")
+  }
+  else{
+    cetz.draw.line(center-point-b, center-point-c, mark: (end: ">"), name: "line")
+  }
   let anchor = "east"
   let distance = 0.2
   if (angle == 0deg or angle == 90deg or angle == -90deg or angle == 180deg){
