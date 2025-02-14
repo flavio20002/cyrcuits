@@ -9,13 +9,28 @@
 ```circuitkz
     \begin{circuitikz}
       \draw (0,0)
-      node[op amp] (oa) {}
-      \draw (oa.vcc1) to [R,l_=$2R$] ++ (0,2)
-      \draw (oa.vcc2) to [R=$2R$] ++ (0,-2)
-      \draw (oa.in1) to [R,l_=$2R$] ++ (-2,0)
-      \draw (oa.in2) to [R,l=$2R$] ++ (-2,0)
-      \draw (oa.out) to [R,l=$2R$] ++ (2,0)
-      \draw (6,0)
-      node[op amp] (o) {}
+      to[R,l_=$R_1$, o-] ++(2,0) coordinate (aux1)
+      node[above]{$v_+$} 
+      node[op amp, anchor=+](oa){};
+      \draw (oa.out)
+      to [short,-o] ++(1,0)
+      to[open,l=$v_o$, invert] ++ (0,-2.5)
+      to [short,o-] ++ (0,-0.5)
+      node[ground]{};
+      \draw (oa.out)
+      to[short, *-] ++(0,1.5)
+      to[R, l=$R_2$] ++(-2.6,0)
+      to[short, -] ++(0,-1)
+      to[R, l=$R_1$, *-] ++(-3,0)
+      to [short] ++(0,-0.5)
+      node[ground]{};
+      \draw (0,0)
+      to[open,l=$v_i$, invert] ++ (0,-2)
+      to [short,o-] ++(0,-0.5)
+      node[ground]{};
+      \draw (aux1)
+      to[R,l=$R_2$, *-] ++(0,-2)
+      to [short] ++(0,-0.5)
+      node[ground]{};
     \end{circuitikz}
 ```
