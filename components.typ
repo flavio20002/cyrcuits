@@ -271,8 +271,8 @@
     )
     cetz.draw.circle((rel: (0.5, 0)), radius: 0.5, stroke: black)
     cetz.draw.merge-path({
-      cetz.draw.arc((rel: (0, 0.2)),start: 45deg, stop: -45deg, radius: 0.15, name: "path1")
-      cetz.draw.arc("path1.end", stop: 225deg, start: 135deg, radius: 0.15)
+      cetz.draw.arc((rel: (0, 0.3)),start: 85deg, stop: -85deg, radius: 0.15, name: "path1")
+      cetz.draw.arc("path1.end", stop: 265deg, start: 95deg, radius: 0.15)
     })
     cetz.draw.line(
       (rel: (1+(total-length - component-length)/2, 0), to: start),
