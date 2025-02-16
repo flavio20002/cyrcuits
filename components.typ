@@ -270,10 +270,8 @@
       fill: none
     )
     cetz.draw.circle((rel: (0.5, 0)), radius: 0.5, stroke: black)
-    cetz.draw.merge-path({
-      cetz.draw.arc((rel: (0, 0.3)),start: 85deg, stop: -85deg, radius: 0.15, name: "path1")
-      cetz.draw.arc("path1.end", stop: 265deg, start: 95deg, radius: 0.15)
-    })
+    let start-sin = (rel: (1,-0.22), to: start)
+    cetz.draw.catmull((rel: (0, 0), to: start-sin), (rel: (-0.1, 0.15), to: start-sin), (rel: (0.1, 0.3), to: start-sin), (rel: (0, 0.45), to: start-sin), tension: .5)
     cetz.draw.line(
       (rel: (1+(total-length - component-length)/2, 0), to: start),
       (rel: ((total-length - component-length)/2, 0)),
