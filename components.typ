@@ -75,7 +75,7 @@
     cetz.draw.line(center-point-c, center-point-b, mark: (end: ">"), name: "line")
   }
   else{
-    cetz.draw.line(center-point-b, center-point-c, mark: (end: ">"), name: "line")
+  cetz.draw.line(center-point-b, center-point-c, mark: (end: ">"), name: "line")
   }
   let anchor = "east"
   let distance = 0.2
@@ -380,7 +380,7 @@ if (element.invert){
   })
 }
 
-#let nos(start, end, l-modifier:"", label:none, name: none,flow: "", ..style) = {
+#let nos(start, end, element) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
@@ -389,13 +389,13 @@ if (element.invert){
   if (angle == 0deg or angle == 90deg){
     content-angle = 0deg
   }
-  if (label != ""){
-    component-content(start,end, l-modifier, label, angle,pad:0.5)
+  if (element.label != ""){
+    component-content(start,end, element.l-modifier, element.label, angle,pad:0.5)
   }
-  if (flow != ""){
-    component-flow(start,end,angle, flow)
+  if (element.flow != ""){
+    component-flow(start,end,angle,element.flow)
   }
-  cetz.draw.group(name: name, ctx => {
+  cetz.draw.group(name: element.name, ctx => {
     cetz.draw.rotate(angle, origin: start)
     let component-length = 0.5
     let step = 1/6
@@ -412,7 +412,7 @@ if (element.invert){
   })
 }
 
-#let ospst(start, end, l-modifier:"", label:none, name: none, ..style) = {
+#let ospst(start, end, element) = {
   cetz.draw.set-style(mark: (fill: black))
   let (x1,y1,..) = start
   let (x2,y2,..) = end
@@ -422,10 +422,10 @@ if (element.invert){
   if (angle == 0deg or angle == 90deg){
     content-angle = 0deg
   }
-  if (label != ""){
-    component-content(start,end, l-modifier, label, angle,pad:0.5)
+  if (element.label != ""){
+    component-content(start,end, element.l-modifier, element.label, angle,pad:0.5)
   }
-  cetz.draw.group(name: name, ctx => {
+  cetz.draw.group(name: element.name, ctx => {
     cetz.draw.rotate(angle, origin: start)
     let component-length = 0.5
     let step = 1/6
@@ -613,4 +613,16 @@ if (element.invert){
   cetz.draw.line((rel:(-0.1,-0.2), to: start), (rel:(0.1,-0.2), to: start))
 }
 
-
+#let components = (
+  "short": short,
+  "open": open,
+  "generic": generic,
+  "sV": sV,
+  "battery1": battery1,
+  "isource": isource,
+  "nos": nos,
+  "ospst": ospst,
+  "R": R,
+  "C": C,
+  "L": L,
+)

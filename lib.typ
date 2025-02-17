@@ -159,64 +159,10 @@
           let start = start-point
           let end = (rel: element.dest-point,to: start-point)
           start-point = end
-          if (element.name == "R"){
-            get-ctx(ctx => {
-              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              R(st, en, element)
-            })
-          } else if (element.name == "generic"){
-            get-ctx(ctx => {
-              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              generic(st, en, element)
-            })
-          } else  if (element.name == "battery1"){
-            get-ctx(ctx => {
-              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              battery1(st, en, element)
-            })
-          } else  if (element.name == "sV"){
-            get-ctx(ctx => {
-              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              sV(st, en, element)
-            })
-         } else  if (element.name == "isource"){
-            get-ctx(ctx => {
-              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              isource(st, en, element)
-            })
-          } else  if (element.name == "short"){
-            get-ctx(ctx => {
-              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              short(st, en, element)
-            })
-          } 
-          else  if (element.name == "open"){
-            get-ctx(ctx => {
-              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              open(st, en, element)
-            })
-          } else  if (element.name == "nos"){
-            get-ctx(ctx => {
-              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              nos(st, en, l-modifier: element.l-modifier, label: element.label,flow: element.flow)
-            })
-          } else  if (element.name == "ospst"){
-            get-ctx(ctx => {
-              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              ospst(st, en, l-modifier: element.l-modifier, label: element.label)
-            })
-          } else  if (element.name == "C"){
-            get-ctx(ctx => {
-              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              C(st, en, element)
-            })
-          } else  if (element.name == "L"){
-            get-ctx(ctx => {
-              let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
-              L(st, en, element)
-            })
-          }
-
+          get-ctx(ctx => {
+            let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
+            components.at(element.name)(st, en, element)
+          })
           if (element.node-left == "*"){
             get-ctx(ctx => {
               let (ctx, st) = cetz.coordinate.resolve(ctx, start)
