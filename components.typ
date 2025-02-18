@@ -613,6 +613,86 @@ if (element.invert){
   cetz.draw.line((rel:(-0.1,-0.2), to: start), (rel:(0.1,-0.2), to: start))
 }
 
+#let NOContact(start, end, element) = {
+  let (x1,y1,..) = start
+  let (x2,y2,..) = end
+  let angle = calc.atan2(x2 - x1, y2 - y1)
+  if (element.label != ""){
+    component-content(start,end, element.l-modifier, element.label, angle,pad:0.7)
+  }
+  cetz.draw.group(name: element.name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
+    let component-length = 0.4
+    let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
+    cetz.draw.line(
+      start,
+      (rel: ((total-length - component-length)/2, 0)),
+      fill: none
+    )
+    cetz.draw.line((rel: (0, -0.4)), (rel: (0, 0.8)),)
+    cetz.draw.line((rel: (0.4, 0)), (rel: (0, -0.8)),)
+    cetz.draw.line(
+      (rel: (0.4+(total-length - component-length)/2, 0), to: start),
+      (rel: ((total-length - component-length)/2, 0)),
+      fill: none
+    )
+  })
+}
+
+#let NCContact(start, end, element) = {
+  let (x1,y1,..) = start
+  let (x2,y2,..) = end
+  let angle = calc.atan2(x2 - x1, y2 - y1)
+  if (element.label != ""){
+    component-content(start,end, element.l-modifier, element.label, angle,pad:0.7)
+  }
+  cetz.draw.group(name: element.name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
+    let component-length = 0.4
+    let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
+    cetz.draw.line(
+      start,
+      (rel: ((total-length - component-length)/2, 0)),
+      fill: none
+    )
+    cetz.draw.line((rel: (0, -0.4)), (rel: (0, 0.8)),name: "line1")
+    cetz.draw.line((rel: (0.4, 0)), (rel: (0, -0.8)),name: "line2")
+    cetz.draw.line(
+      (rel: (0.4+(total-length - component-length)/2, 0), to: start),
+      (rel: ((total-length - component-length)/2, 0)),
+      fill: none
+    )
+    cetz.draw.line((rel: (-0.2, 0), to: "line1.start"), (rel: (0.2, 0), to: "line2.start"))
+  })
+}
+
+#let Coil(start, end, element) = {
+  let (x1,y1,..) = start
+  let (x2,y2,..) = end
+  let angle = calc.atan2(x2 - x1, y2 - y1)
+  if (element.label != ""){
+    component-content(start,end, element.l-modifier, element.label, angle,pad:0.7)
+  }
+  cetz.draw.group(name: element.name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
+    let component-length = 0.7
+    let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
+    cetz.draw.line(
+      start,
+      (rel: ((total-length - component-length)/2, 0)),
+      fill: none,
+      name: "line1"
+    )
+    cetz.draw.arc((rel: (0, 0)), radius: 0.5, start: 130deg, delta: 100deg,  anchor: "west", name: "arc1")
+    cetz.draw.arc((rel: (0.7, 0), to: "line1.end"), radius: 0.5, start: 50deg, delta: -100deg, name: "arc2", anchor: "east")
+    cetz.draw.line(
+      (rel: (0.7+(total-length - component-length)/2, 0), to: start),
+      (rel: ((total-length - component-length)/2, 0)),
+      fill: none
+    )
+  })
+}
+
 #let components = (
   "short": short,
   "open": open,
@@ -625,4 +705,7 @@ if (element.invert){
   "R": R,
   "C": C,
   "L": L,
+  "NOContact": NOContact,
+  "NCContact": NCContact,
+  "Coil": Coil,
 )

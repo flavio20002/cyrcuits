@@ -9,8 +9,8 @@
 
     for line in lines {
         if not line.starts-with("\\begin") and not line.starts-with("\\end") {
-        if line.contains(regex("\\\\draw\ ?\((\d+),(\d+)\)")){
-          let drawPoint = line.match(regex("\\\\draw\ ?\((\d+),(\d+)\)")).captures.map((it) => {int(it)})
+        if line.contains(regex("\\\\draw\ ?\((-?\d+),(-?\d+)\)")){
+          let drawPoint = line.match(regex("\\\\draw\ ?\((-?\d+),(-?\d+)\)")).captures.map((it) => {int(it)})
           elements.push((name:"point", point: drawPoint))
         }
         else if line.contains(regex("\\\\draw\ ?\(([0-9A-Za-z_]+)\)")){
@@ -207,9 +207,10 @@
   })
 }
 
-#let cyrcuits(scale:1, doc, text-size:none) = [
+#let cyrcuits(scale:1, doc, text-size:none, font:none) = [
   #show raw.where(lang: "circuitkz") : it => [
     #set text(size: text-size) if text-size != none
+    #set text(font: font) if font != none
     #draw-circuit(scale, it)
   ]
   #doc
