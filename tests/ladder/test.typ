@@ -18,7 +18,7 @@
       to[Coil="Emergency"] ++ (3,0);
       \draw (0,-3)
       to[NOContact="PB1"] ++ (3,0)
-      to[NCContact="Stop richiesto"] ++ (3,0)
+      to[NCContact="StopRichiesto"] ++ (3,0)
       to[NCContact="Anomalia"] ++ (3,0)
       to[NCContact="Emergenza"] ++ (3,0)
       to[Coil="Funzione"] ++ (3,0);
