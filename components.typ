@@ -585,22 +585,22 @@ if (element.invert){
   })
 }
 
-#let above(start,element) = {
+#let abovenode(start,element) = {
   let in-point = start
    cetz.draw.content((rel:(0, 0.25),to: start), text(size: 0.75em, eval(element.caption)), anchor: "south")
 }
 
-#let below(start,element) = {
+#let belownode(start,element) = {
   let in-point = start
    cetz.draw.content((rel:(0, -0.25),to: start), text(size: 0.75em, eval(element.caption)), anchor: "north")
 }
 
-#let right(start,element) = {
+#let rightnode(start,element) = {
   let in-point = start
    cetz.draw.content((rel:(0.25, 0),to: start), text(size: 0.75em, eval(element.caption)), anchor: "west")
 }
 
-#let left(start,element) = {
+#let leftnode(start,element) = {
   let in-point = start
    cetz.draw.content((rel:(-0.25, 0),to: start), text(size: 0.75em, eval(element.caption)), anchor: "east")
 }
@@ -714,8 +714,8 @@ if (element.invert){
   "spdt": spdt,
   "op amp": op-amp,
   "ground": ground,
-  "above": above,
-  "below": below,
-  "right": right,
-  "left": left,
+  "above": abovenode,
+  "below": belownode,
+  "right": rightnode,
+  "left": leftnode,
 )
