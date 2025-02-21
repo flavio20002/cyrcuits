@@ -718,11 +718,4 @@ if (element.invert){
   "below": below,
   "right": right,
   "left": left,
-  "ospst": ospst,
-  "R": R,
-  "C": C,
-  "L": L,
-  "NOContact": NOContact,
-  "NCContact": NCContact,
-  "Coil": Coil,
 )
