@@ -354,7 +354,7 @@
   if (angle == 0deg or angle == 90deg){
     content-angle = 0deg
   }
-  if (label!=""){
+  if (element.label != ""){
     component-content(start,end, element.l-modifier, element.label, angle, pad:0.25)
   }
   cetz.draw.group(name: element.name, ctx => {
