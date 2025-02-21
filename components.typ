@@ -709,3 +709,20 @@ if (element.invert){
   "NCContact": NCContact,
   "Coil": Coil,
 )
+
+#let nodes = (
+  "spdt": spdt,
+  "op amp": op-amp,
+  "ground": ground,
+  "above": above,
+  "below": below,
+  "right": right,
+  "left": left,
+  "ospst": ospst,
+  "R": R,
+  "C": C,
+  "L": L,
+  "NOContact": NOContact,
+  "NCContact": NCContact,
+  "Coil": Coil,
+)

@@ -92,8 +92,7 @@
 }
 
 
-#let draw-circuit(scaleFactor, raw_code) =  {
-  let elements = parse-circuit(raw_code)
+#let draw-circuit(scaleFactor, elements) =  {
   cetz.canvas(length: 1cm, {
     import cetz.draw: *
     scale(scaleFactor)
@@ -111,48 +110,10 @@
           start-point = element.point
         }
         else if (element.name == "node"){
-          if (element.type == "spdt"){
-            get-ctx(ctx => {
-              let (ctx, st) = cetz.coordinate.resolve(ctx, start-point)
-              spdt(st,element)
-            })
-          }
-          else if (element.type == "op amp"){
-            get-ctx(ctx => {
-              let (ctx, st) = cetz.coordinate.resolve(ctx, start-point)
-              op-amp(st,element)
-            })
-          }
-          else if (element.type == "ground"){
-            get-ctx(ctx => {
-              let (ctx, st) = cetz.coordinate.resolve(ctx, start-point)
-              ground(st,element)
-            })
-          }
-          else if (element.type == "above"){
-            get-ctx(ctx => {
-              let (ctx, st) = cetz.coordinate.resolve(ctx, start-point)
-              above(st,element)
-            })
-          }
-          else if (element.type == "below"){
-            get-ctx(ctx => {
-              let (ctx, st) = cetz.coordinate.resolve(ctx, start-point)
-              below(st,element)
-            })
-          }
-          else if (element.type == "right"){
-            get-ctx(ctx => {
-              let (ctx, st) = cetz.coordinate.resolve(ctx, start-point)
-              right(st,element)
-            })
-          }
-          else if (element.type == "left"){
-            get-ctx(ctx => {
-              let (ctx, st) = cetz.coordinate.resolve(ctx, start-point)
-              left(st,element)
-            })
-          } 
+          get-ctx(ctx => {
+            let (ctx, st) = cetz.coordinate.resolve(ctx, start-point)
+            nodes.at(element.type)(st, element)
+          })        
         }
         else {
           //let (ctx, start, end) = cetz.coordinate.resolve(ctx,start-point, (rel: element.dest-point,to: start-point))
@@ -208,10 +169,11 @@
 }
 
 #let cyrcuits(scale:1, doc, text-size:none, font:none) = [
-  #show raw.where(lang: "circuitkz") : it => [
-    #set text(size: text-size) if text-size != none
-    #set text(font: font) if font != none
-    #draw-circuit(scale, it)
-  ]
+  #show raw.where(lang: "circuitkz") : it => {
+    set text(size: text-size) if text-size != none
+    set text(font: font) if font != none
+    let elements = parse-circuit(it)
+    draw-circuit(scale, elements)
+  }
   #doc
 ]
