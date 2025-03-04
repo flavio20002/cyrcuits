@@ -168,10 +168,10 @@
   })
 }
 
-#let cyrcuits(scale:1, doc, text-size:none, font:none) = [
+#let cyrcuits(scale:1, doc, text-size:none, font:"libertinus serif") = [
   #show raw.where(lang: "circuitkz") : it => {
     set text(size: text-size) if text-size != none
-    set text(font: font) if font != none
+    set text(font: font)
     let elements = parse-circuit(it)
     draw-circuit(scale, elements)
   }
