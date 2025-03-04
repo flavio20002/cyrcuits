@@ -92,8 +92,8 @@
 }
 
 
-#let draw-circuit(scaleFactor, elements) =  {
-  cetz.canvas(length: 1cm, {
+#let draw-circuit(scaleFactor, elements, padding) =  {
+  cetz.canvas(length: 1cm, padding: padding, {
     import cetz.draw: *
     scale(scaleFactor)
     get-ctx(ctx => {
@@ -168,12 +168,12 @@
   })
 }
 
-#let cyrcuits(scale:1, doc, text-size:none, font:"libertinus serif") = [
+#let cyrcuits(scale:1, doc, text-size:none, font:"libertinus serif", padding: 0) = [
   #show raw.where(lang: "circuitkz") : it => {
     set text(size: text-size) if text-size != none
     set text(font: font)
     let elements = parse-circuit(it)
-    draw-circuit(scale, elements)
+    draw-circuit(scale, elements, padding)
   }
   #doc
 ]
