@@ -35,7 +35,9 @@
     to[R, l=$R_3$, -*] ++(-2.6,0);
     \draw (oa3.out)
     to[short, *-o] ++(1,0)
-    node[above]{$v_o$};
+    to[open,l=$v_o$, invert] ++ (0,-2)
+    to [short,o-] ++ (0,-0.5)
+    node[ground]{};
     \draw (oa3.in2)
     to [short] ++(0,-2.5)
     \draw (oa2.out)
