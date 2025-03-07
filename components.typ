@@ -557,11 +557,21 @@ if (element.invert){
 
 #let op-amp(start,element) = {
   let in-point = start
-  if (element.anchor == "+") {
-    in-point = (rel: (1.3, 0.5),to: start)
+  if (element.non_inv_input_up){
+    if (element.anchor == "-") {
+      in-point = (rel: (1.3, 0.5),to: start)
+    }
+    if (element.anchor == "+") {
+      in-point = (rel: (1.3, -0.5),to: start)
+    }
   }
-  if (element.anchor == "-") {
-    in-point = (rel: (1.3, -0.5),to: start)
+  else{
+    if (element.anchor == "+") {
+      in-point = (rel: (1.3, 0.5),to: start)
+    }
+    if (element.anchor == "-") {
+      in-point = (rel: (1.3, -0.5),to: start)
+    } 
   }
   cetz.draw.group(name: element.component-name, ctx => {
     cetz.draw.line((rel: (-1.3,0.5),to: in-point), (rel:(0.5,0)))
@@ -573,8 +583,14 @@ if (element.invert){
       (rel: (0, 2)),
       close: true
     )
-    cetz.draw.content((rel:(-0.55, 0.5),to: in-point), text(size: 1.25em, [--]))
-    cetz.draw.content((rel:(-0.55, -0.5),to: in-point), text(size: 1.25em, [+]))
+    if (element.non_inv_input_up){
+    cetz.draw.content((rel:(-0.55, 0.5),to: in-point), text(size: 1.25em, [+]))
+    cetz.draw.content((rel:(-0.55, -0.5),to: in-point), text(size: 1.25em, [--]))
+    }
+    else{
+      cetz.draw.content((rel:(-0.55, 0.5),to: in-point), text(size: 1.25em, [--]))
+      cetz.draw.content((rel:(-0.55, -0.5),to: in-point), text(size: 1.25em, [+]))
+    }
     anchors((
       "in1": (rel:(-1.3, 0.5), to:in-point),
       "in2": (rel:(-1.3, -0.5), to:in-point),

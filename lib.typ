@@ -21,8 +21,11 @@
           let drawPoint = line.match(regex("\\\\draw\ ?\(([0-9A-Za-z_\.\ ]+)\)")).captures.at(0)
           elements.push((name:"point3", point: drawPoint))
         } else if line.contains(regex("node\[([0-9A-Za-z_ ]+),?\ ?(?:xscale=)?(-?\d)?,?\ ?(?:yscale=)?(-?\d)?,?\ ?(?:anchor=)?(.*)?\]\ ?\(?([0-9A-Za-z_]*)\)?\ ?\{([^,]*)\}")){
-            let (type,xscale,yscale,anchor,component-name,caption) = line.match(regex("node\[([0-9A-Za-z_ ]+),?\ ?(?:xscale=)?(-?\d)?,?\ ?(?:yscale=)?(-?\d)?,?\ ?(?:anchor=)?(.*)?\]\ ?\(?([0-9A-Za-z_]*)\)?\ ?\{([^,]*)\}")).captures
-            elements.push((name: "node",type:type, xscale:xscale,yscale:yscale, component-name: component-name, anchor:anchor,caption:caption));
+            let (type,xscale,yscale,anchor,component-name,caption) = line.match(regex("node\[([0-9A-Za-z_ ]+),?\ ?(?:xscale=)?(-?\d)?,?\ ?(?:yscale=)?(-?\d)?,?\ ?(?:anchor=)?([^,]*)?\ ?,?.*\]\ ?\(?([0-9A-Za-z_]*)\)?\ ?\{([^,]*)\}")).captures
+
+            let non_inv_input_up = line.match(regex("noinv input up")) != none
+            
+            elements.push((name: "node",type:type, xscale:xscale,yscale:yscale, component-name: component-name, anchor:anchor,caption:caption, non_inv_input_up: non_inv_input_up));
         } else if line.contains(regex("to\ *\[")) {
             // Parsing di elementi come resistori, sorgenti, ecc.
             let name = ""
