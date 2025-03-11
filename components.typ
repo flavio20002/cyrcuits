@@ -1,4 +1,4 @@
-#import "@local/cetz:0.3.4"
+#import "@preview/cetz:0.3.4"
 
 #let anchors(anchors) = {
   for (k, v) in anchors {
