@@ -805,6 +805,37 @@ if (element.invert){
   })
 }
 
+#let operation(start,element) = {
+  cetz.draw.group(name: element.component-name, ctx => {
+    let in-point = (rel:(0.75,0), to:start)
+    // cetz.draw.line((rel: (-1.3,-0.5),to: start), (rel:(0.5,-0)))
+    // cetz.draw.line((rel: (0.8,0),to: start), (rel:(0.5,0)))
+    cetz.draw.line(
+      in-point,
+      (rel: (0, 0.75)),
+      (rel: (1.5, 0)),
+      (rel: (0, -2.5)),
+      (rel: (-1.5, 0)),
+      close: true
+    )
+    cetz.draw.line(start, in-point)
+    cetz.draw.line((rel: (2.25,0), to:start), (rel:(0.75,0)))
+    cetz.draw.line((rel: (0,-0.75),to: in-point), (rel:(-0.25,0)))
+    cetz.draw.line((rel: (0,-1.25),to: in-point), (rel:(-0.25,0)))
+    cetz.draw.line((rel: (1.5,-0.75),to: in-point), (rel:(0.25,0)))
+    cetz.draw.content((rel:(0.75, 0.5),to: in-point), text(size: 1em, element.caption, weight: "bold"),anchor: "center")
+    cetz.draw.content((rel:(0.15, 0),to: in-point), text(size: 0.75em, [EN]),anchor: "west")
+    cetz.draw.content((rel:(1.35, 0),to: in-point), text(size: 0.75em, [ENO]), anchor: "east")
+    anchors((
+      "en": in-point,
+      "eno": (rel:(2.25, 0), to:in-point),
+      "in1": (rel:(-0.15, -0.75), to:in-point),
+      "in2": (rel:(-0.15, -1.25), to:in-point),
+      "res": (rel:(1.65, -0.75), to:in-point),
+    ))
+  })
+}
+
 #let components = (
   "short": short,
   "open": open,
@@ -828,6 +859,7 @@ if (element.invert){
   "ton": ton,
   "compare": compare,
   "ctu": ctu,
+  "operation": operation,
   "ground": ground,
   "above": abovenode,
   "below": belownode,
