@@ -516,6 +516,40 @@ if (element.invert){
   })
 }
 
+#let led(start, end, element) = {
+  let (x1,y1,..) = start
+  let (x2,y2,..) = end
+  let angle = calc.atan2(x2 - x1, y2 - y1)
+  if (element.label != ""){
+    component-content(start,end, element.l-modifier, element.label, angle,pad:0.5)
+  }
+  if (element.flow != ""){
+    component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
+  }
+  if (element.voltage != ""){
+    component-voltage(start,end,angle,element.voltage,padding:1)
+  }
+  cetz.draw.group(name: element.name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
+    let component-length = 0
+    let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
+      cetz.draw.line(
+        start,
+        (rel: ((total-length - component-length)/2, 0)),
+      )
+      cetz.draw.polygon((), 3, angle: 0deg, radius: 0.25, fill:black, name: "triangle")
+      cetz.draw.line(
+        (rel: (component-length+(total-length - component-length)/2, 0), to: start),
+        (rel: ((total-length - component-length)/2, 0)),
+      )
+      cetz.draw.line((rel: (0, -0.25), to: "triangle.east"),
+        (rel: (0, .5)),
+      )
+      cetz.draw.line((rel: (-0.25, 0.25), to: "triangle.east"),(rel: (0.2, 0.2)), stroke: 0.5pt, mark: (scale: 0.5, end: ">"))
+      cetz.draw.line((rel: (-0.1, 0.25), to: "triangle.east"),(rel: (0.2, 0.2)), stroke: 0.5pt, mark: (scale: 0.5, end: ">"))
+    })
+}
+
 #let node(start) = {
   cetz.draw.circle(start, radius: 0.075, stroke: black, fill: black)
 }
@@ -600,6 +634,31 @@ if (element.invert){
     ))
   })
 }
+
+#let npn(start,element) = {
+  cetz.draw.set-style(mark: (fill: black))
+  let in-point = start
+  cetz.draw.group(name: element.component-name, ctx => {
+    cetz.draw.line((rel: (0,0),to: in-point), (rel:(0.5,0)))
+    cetz.draw.line((rel: (0.5,-0.5),to: in-point), (rel:(0,1)),stroke: 2pt)
+    cetz.draw.line((rel: (0.5,0.25),to: in-point), (rel:(0.5,0.25)), (rel:(0,0.5)))
+    cetz.draw.line((rel: (0.5,-0.25),to: in-point), (rel:(0.5,-0.25)), (rel:(0,-0.5)))
+    cetz.draw.line((rel: (0.5,-0.25),to: in-point), (rel:(0.5,-0.25)), mark: (end: ">", offset: 0.1))
+    if (element.show_voltage){
+      cetz.draw.bezier( (rel:(1.25, -1), to:in-point),  (rel:(1.25, 1), to:in-point),  (rel:(2, 0), to:in-point), mark: (end: ">"), )
+      cetz.draw.content((rel:(1.75, 0), to:in-point), angle:0deg, text($V_"CE"$), anchor: "west")
+
+      cetz.draw.bezier((rel:(0.75, -1.25), to:in-point),  (rel:(0, -0.25), to:in-point),  (rel:(0, -1), to:in-point), mark: (end: ">"), )
+      cetz.draw.content((rel:(0.125, -1), to:in-point), angle:0deg, text($V_"BE"$), anchor: "north-east")
+    }
+    anchors((
+      "B": (rel:(0, 0), to:in-point),
+      "C": (rel:(1, 1), to:in-point),
+      "E": (rel:(1, -1), to:in-point),
+    ))
+  })
+}
+
 
 #let abovenode(start,element) = {
   let in-point = start
@@ -848,6 +907,7 @@ if (element.invert){
   "R": R,
   "C": C,
   "L": L,
+  "led": led,
   "NOContact": NOContact,
   "NCContact": NCContact,
   "Coil": Coil,
@@ -856,6 +916,7 @@ if (element.invert){
 #let nodes = (
   "spdt": spdt,
   "op amp": op-amp,
+  "npn": npn,
   "ton": ton,
   "compare": compare,
   "ctu": ctu,

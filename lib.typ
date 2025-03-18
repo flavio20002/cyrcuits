@@ -24,8 +24,12 @@
             let (type,xscale,yscale,anchor,component-name,caption) = line.match(regex("node\[([0-9A-Za-z_ ]+),?\ ?(?:xscale=)?(-?\d)?,?\ ?(?:yscale=)?(-?\d)?,?\ ?(?:anchor=)?([^,]*)?\ ?,?.*\]\ ?\(?([0-9A-Za-z_]*)\)?\ ?\{([^,]*)\}")).captures
 
             let non_inv_input_up = line.match(regex("noinv input up")) != none
+
+            let show_voltage = line.match(regex("show voltage")) != none
+
             
-            elements.push((name: "node",type:type, xscale:xscale,yscale:yscale, component-name: component-name, anchor:anchor,caption:caption, non_inv_input_up: non_inv_input_up));
+            elements.push((name: "node",type:type, xscale:xscale,yscale:yscale, component-name: component-name, anchor:anchor,caption:caption, non_inv_input_up: non_inv_input_up,
+            show_voltage: show_voltage));
         } else if line.contains(regex("to\ *\[")) {
             // Parsing di elementi come resistori, sorgenti, ecc.
             let name = ""
