@@ -35,7 +35,7 @@
     node[left](){"T#5s"};
     \draw (0,-8)
     to[NOContact="FinePesatura"] ++ (3,0)
-    node[compare](LT_PESO_MIN5){LT};
+    node[compare](LT_PESO_MIN5){"LT"};
     \draw (LT_PESO_MIN5.out)
     to[short] ++ (6,0)
     to[Coil="PesoMin5"] ++ (3,0);
@@ -45,7 +45,7 @@
     node[left](){"3.33"};
     \draw (0,-11)
     to[NOContact="FinePesatura"] ++ (3,0)
-    node[compare](GT_PESO_MAG10){GT};
+    node[compare](GT_PESO_MAG10){"GT"};
     \draw (GT_PESO_MAG10.out)
     to[short] ++ (6,0)
     to[Coil="PesoMag10"] ++ (3,0);
@@ -55,9 +55,9 @@
     node[left](){"6.66"};
     \draw (0,-14)
     to[NOContact="FinePesatura"] ++ (3,0)
-    node[compare](GE){GE};
+    node[compare](GE){"GE"};
     \draw (GE.out)
-    node[compare](LE){LE};
+    node[compare](LE){"LE"};
     \draw (LE.out)
     to[short] ++ (3,0)
     to[Coil="PesoIntermedio"] ++ (3,0);

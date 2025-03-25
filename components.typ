@@ -44,7 +44,7 @@
       anchor = "west"
     }
   }
-  cetz.draw.content((a: center-point, b: start, number: padding, angle: pad-angle), angle:content-angle, text(eval(label)), anchor: anchor)
+  cetz.draw.content((a: center-point, b: start, number: padding, angle: pad-angle), angle:content-angle, text(label), anchor: anchor)
 }
 
 #let component-flow(start,end,angle,flow,flow-config:"",center:false) = {
@@ -107,7 +107,7 @@
   } else {
     anchor = "west"
   }
-  cetz.draw.content((a: center-point, b: center-point-b, number: distance, angle: 90deg), angle:content-angle, text(eval(flow)), anchor: anchor)
+  cetz.draw.content((a: center-point, b: center-point-b, number: distance, angle: 90deg), angle:content-angle, text(flow), anchor: anchor)
 }
 
 #let component-voltage(start,end,angle,voltage,padding:1.5) = {
@@ -137,20 +137,20 @@
   } else {
     anchor = "east"
   }
-  cetz.draw.content((a: center-point, b: center-point-b2, number: padding/2, angle: 90deg), angle:content-angle, text(eval(voltage)), anchor: anchor)
+  cetz.draw.content((a: center-point, b: center-point-b2, number: padding/2, angle: 90deg), angle:content-angle, text(voltage), anchor: anchor)
 }
 
 #let R(start, end, element) = {
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle,pad: 0.4)
   }
-  if (element.flow != ""){
+  if (element.flow != none){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
-  if (element.voltage != ""){
+  if (element.voltage != none){
     component-voltage(start,end,angle,element.voltage)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -182,13 +182,13 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle,pad: 0.4)
   }
-  if (element.flow != ""){
+  if (element.flow != none){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
-  if (element.voltage != ""){
+  if (element.voltage != none){
     component-voltage(start,end,angle,element.voltage)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -219,10 +219,10 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle,pad:0.75)
   }
-  if (element.flow != ""){
+  if (element.flow != none){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -254,10 +254,10 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle,pad:0.75)
   }
-  if (element.flow != ""){
+  if (element.flow != none){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -285,10 +285,10 @@
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle,pad:0.75)
   }
-  if (element.flow != ""){
+  if (element.flow != none){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -326,7 +326,7 @@
   if (angle == 0deg or angle == 90deg){
     content-angle = 0deg
   }
-  if (element.flow != ""){
+  if (element.flow != none){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config, center: true)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -354,7 +354,7 @@
   if (angle == 0deg or angle == 90deg){
     content-angle = 0deg
   }
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle, pad:0.25)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -389,10 +389,10 @@ if (element.invert){
   if (angle == 0deg or angle == 90deg){
     content-angle = 0deg
   }
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle,pad:0.5)
   }
-  if (element.flow != ""){
+  if (element.flow != none){
     component-flow(start,end,angle,element.flow)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -422,7 +422,7 @@ if (element.invert){
   if (angle == 0deg or angle == 90deg){
     content-angle = 0deg
   }
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle,pad:0.5)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -447,13 +447,13 @@ if (element.invert){
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle,pad:0.7)
   }
-  if (element.flow != ""){
+  if (element.flow != none){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
-  if (element.voltage != ""){
+  if (element.voltage != none){
     component-voltage(start,end,angle,element.voltage)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -479,13 +479,13 @@ if (element.invert){
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle,pad:0.4)
   }
-  if (element.flow != ""){
+  if (element.flow != none){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
-  if (element.voltage != ""){
+  if (element.voltage != none){
     component-voltage(start,end,angle,element.voltage,padding:1)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -520,13 +520,13 @@ if (element.invert){
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle,pad:0.5)
   }
-  if (element.flow != ""){
+  if (element.flow != none){
     component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
   }
-  if (element.voltage != ""){
+  if (element.voltage != none){
     component-voltage(start,end,angle,element.voltage,padding:1)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -565,7 +565,7 @@ if (element.invert){
   if (node-anchor.contains("north")){
     angle = -90deg
   }
-  cetz.draw.content((rel: (angle: angle, radius: 0.25), to: start),text(eval(node)),anchor: node-anchor)
+  cetz.draw.content((rel: (angle: angle, radius: 0.25), to: start),text(node),anchor: node-anchor)
 }
 
 #let spdt(start,element) = {
@@ -662,24 +662,23 @@ if (element.invert){
 
 #let abovenode(start,element) = {
   let in-point = start
-   cetz.draw.content((rel:(0, 0.25),to: start), text(size: 0.75em, eval(element.caption)), anchor: "south")
+   cetz.draw.content((rel:(0, 0.25),to: start), text(size: 0.75em, element.caption), anchor: "south")
 }
 
 #let belownode(start,element) = {
   let in-point = start
-   cetz.draw.content((rel:(0, -0.25),to: start), text(size: 0.75em, eval(element.caption)), anchor: "north")
+   cetz.draw.content((rel:(0, -0.25),to: start), text(size: 0.75em, element.caption), anchor: "north")
 }
 
 #let rightnode(start,element) = {
   let in-point = start
-   cetz.draw.content((rel:(0.25, 0),to: start), text(size: 0.75em, eval(element.caption)), anchor: "west")
+   cetz.draw.content((rel:(0.25, 0),to: start), text(size: 0.75em, element.caption), anchor: "west")
 }
 
 #let leftnode(start,element) = {
   let in-point = start
-   cetz.draw.content((rel:(-0.25, 0),to: start), text(size: 0.75em, eval(element.caption)), anchor: "east")
+   cetz.draw.content((rel:(-0.25, 0),to: start), text(size: 0.75em, element.caption), anchor: "east")
 }
-
 
 #let ground(start,element) = {
   let in-point = start
@@ -692,7 +691,7 @@ if (element.invert){
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle,pad:0.7)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -718,7 +717,7 @@ if (element.invert){
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle,pad:0.7)
   }
   cetz.draw.group(name: element.name, ctx => {
@@ -745,7 +744,7 @@ if (element.invert){
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
-  if (element.label != ""){
+  if (element.label != none){
     component-content(start,end, element.l-modifier, element.label, angle,pad:0.7)
   }
   cetz.draw.group(name: element.name, ctx => {

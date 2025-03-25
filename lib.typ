@@ -28,7 +28,7 @@
             let show_voltage = line.match(regex("show voltage")) != none
 
             
-            elements.push((name: "node",type:type, xscale:xscale,yscale:yscale, component-name: component-name, anchor:anchor,caption:caption, non_inv_input_up: non_inv_input_up,
+            elements.push((name: "node",type:type, xscale:xscale,yscale:yscale, component-name: component-name, anchor:anchor,caption:eval(caption), non_inv_input_up: non_inv_input_up,
             show_voltage: show_voltage));
         } else if line.contains(regex("to\ *\[")) {
             // Parsing di elementi come resistori, sorgenti, ecc.
@@ -91,7 +91,7 @@
             
             let dest-point = line.match(regex("\+\+\s*\((-?\d+\.?\d*),(-?\d+\.?\d*)\)")).captures.map((it) => {float(it)})
             
-            elements.push((name: name,l-modifier: l-modifier, label: label,flow: flow,flow-config: flow-config,node-right:node-right,node-left:node-left, coordinate-name: coordinate-name, dest-point: dest-point, voltage: voltage,node-anchor:node-anchor,node:node,invert:invert));
+            elements.push((name: name,l-modifier: l-modifier, label: eval(label), flow: eval(flow),flow-config: flow-config,node-right:node-right,node-left:node-left, coordinate-name: coordinate-name, dest-point: dest-point, voltage: eval(voltage),node-anchor:node-anchor,node:node,invert:invert));
         }
       }
     }
@@ -162,7 +162,7 @@
           if (element.node != none){
             get-ctx(ctx => {
               let (ctx, en) = cetz.coordinate.resolve(ctx, end)
-              node-content(en,element.node,element.node-anchor)
+              node-content(en,eval(element.node),element.node-anchor)
             })
           }
           
@@ -184,3 +184,36 @@
   }
   #doc
 ]
+
+#let to(end,component, start:(), label:"") = {
+  cetz.draw.get-ctx(ctx => {
+    let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
+    components.at(component)(st, en, 
+      (name: component,
+        l-modifier: "",
+        label: label,
+        flow: none,
+        flow-config: "",
+        node-right: none,
+        node-left: none,
+        coordinate-name: "aux1",
+        voltage: "",
+        node-anchor: none,
+        node: none,
+        invert: false,
+      )
+    )
+    cetz.draw.move-to(en)
+  })
+}
+
+#let cyrcuits2(scale: none, font-size: none, elements ) = {
+  figure()[
+    #set text(size:  font-size) if  font-size != none
+    #if (scale!=none){
+      canvas({ draw.scale(scale)} + elements)
+    } else{
+      cetz.canvas(elements)
+    }
+  ]
+}
