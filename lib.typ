@@ -130,34 +130,19 @@
           get-ctx(ctx => {
             let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
             components.at(element.name)(st, en, element)
-          })
-          if (element.node-left == "*"){
-            get-ctx(ctx => {
-              let (ctx, st) = cetz.coordinate.resolve(ctx, start)
-              node(start)
-            })
-          }
-
-          if (element.node-right == "*"){
-            get-ctx(ctx => {
-              let (ctx, en) = cetz.coordinate.resolve(ctx, end)
+            if (element.node-left == "*"){
+              node(st)
+            }
+            if (element.node-right == "*"){
               node(en)
-            })
-          }
-
-          if (element.node-left == "o"){
-            get-ctx(ctx => {
-              let (ctx, st) = cetz.coordinate.resolve(ctx, start)
-              node-empty(start)
-            })
-          }
-
-          if (element.node-right == "o"){
-            get-ctx(ctx => {
-              let (ctx, en) = cetz.coordinate.resolve(ctx, end)
+            }
+            if (element.node-left == "o"){
+              node-empty(st)
+            }
+            if (element.node-right == "o"){
               node-empty(en)
-            })
-          }
+            }
+          })
 
           if (element.node != none){
             get-ctx(ctx => {
@@ -185,25 +170,63 @@
   #doc
 ]
 
-#let to(end,component, start:(), label:"") = {
+#let to(end, component, start:(), flow: none, label: none, coordinate: none, node-right: none, node-left: none) = {
   cetz.draw.get-ctx(ctx => {
-    let (ctx, st, en) = cetz.coordinate.resolve(ctx, start, end)
+    let coordinates = ("origin" : (0,0))
+    let st
+    let en
+    if (type(start) == str and coordinates.at(start, default:none) != none){
+      st = coordinates.at(start)
+    }
+    else{
+      (ctx, st, en) = cetz.coordinate.resolve(ctx,    start, end)
+    }
     components.at(component)(st, en, 
       (name: component,
         l-modifier: "",
         label: label,
-        flow: none,
-        flow-config: "",
-        node-right: none,
-        node-left: none,
+        flow: flow,
+        flow-config: ">_",
         coordinate-name: "aux1",
-        voltage: "",
+        voltage: none,
         node-anchor: none,
         node: none,
         invert: false,
       )
     )
+    if (node-left == "*"){
+      node(st)
+    }
+    if (node-right == "*"){
+      node(en)
+    }
+    if (node-left == "o"){
+      node-empty(st)
+    }
+    if (node-right == "o"){
+      node-empty(en)
+    }
     cetz.draw.move-to(en)
+      if (coordinate != none){
+        coordinates.insert(coordinate, end)
+      }
+  })
+}
+
+#let node(component, start: (), show-voltage: false, name:none) = {
+  cetz.draw.get-ctx(ctx => {
+    let (ctx, st) = cetz.coordinate.resolve(ctx, start)
+    nodes.at(component)(st, 
+      ( type: component,
+        xscale: none,
+        yscale: none,
+        component-name: name,
+        anchor: "B",
+        caption: none,
+        non_inv_input_up: false,
+        show_voltage: show-voltage,
+      )
+    )
   })
 }
 
@@ -211,8 +234,10 @@
   figure()[
     #set text(size:  font-size) if  font-size != none
     #if (scale!=none){
-      canvas({ draw.scale(scale)} + elements)
+      set text(size:  0.8em)
+      cetz.canvas({ cetz.draw.scale(scale)} + elements)
     } else{
+      set text(size:  0.8em)
       cetz.canvas(elements)
     }
   ]

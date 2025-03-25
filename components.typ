@@ -361,7 +361,7 @@
     cetz.draw.rotate(angle, origin: start)
     let component-length = 0.5
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
-if (element.invert){
+    if (element.invert){
       cetz.draw.line(
         (rel: (angle:0, radius: (total-length - component-length) + 0.25), to: start),
         (rel: (-total-length + component-length, 0)),
