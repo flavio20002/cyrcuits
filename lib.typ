@@ -143,14 +143,12 @@
               node-empty(en)
             }
           })
-
           if (element.node != none){
             get-ctx(ctx => {
               let (ctx, en) = cetz.coordinate.resolve(ctx, end)
               node-content(en,eval(element.node),element.node-anchor)
             })
           }
-          
           if (element.coordinate-name != none){
             coordinates.insert(element.coordinate-name, end)
           }
@@ -170,21 +168,23 @@
   #doc
 ]
 
-#let to(end, component, start:(), flow: none, label: none, coordinate: none, node-right: none, node-left: none) = {
+#let draw(start) = {
   cetz.draw.get-ctx(ctx => {
-    let coordinates = ("origin" : (0,0))
+    let (ctx, st) = cetz.coordinate.resolve(ctx, start)
+    cetz.draw.move-to(st)
+  })
+}
+
+
+#let to(end, component, flow: none, l: none, coordinate: none, node-right: none, node-left: none) = {
+  cetz.draw.get-ctx(ctx => {
     let st
     let en
-    if (type(start) == str and coordinates.at(start, default:none) != none){
-      st = coordinates.at(start)
-    }
-    else{
-      (ctx, st, en) = cetz.coordinate.resolve(ctx,    start, end)
-    }
+    (ctx, st, en) = cetz.coordinate.resolve(ctx, (), end)
     components.at(component)(st, en, 
       (name: component,
         l-modifier: "",
-        label: label,
+        label: l,
         flow: flow,
         flow-config: ">_",
         coordinate-name: "aux1",
@@ -208,7 +208,7 @@
     }
     cetz.draw.move-to(en)
       if (coordinate != none){
-        coordinates.insert(coordinate, end)
+        cetz.draw.anchor(coordinate, en)
       }
   })
 }
