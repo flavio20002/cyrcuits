@@ -796,6 +796,7 @@
       "q": (rel:(2.25, 0), to:in-point),
       "pt": (rel:(-0.15, -0.75), to:in-point),
       "et": (rel:(1.65, -0.75), to:in-point),
+      "end": (rel:(2.25, 0), to:in-point),
     ))
   })
 }
@@ -860,6 +861,7 @@
       "a": (rel:(-0.15, -0.5), to:in-point),
       "b": (rel:(-0.15, -1), to:in-point),
       "out": (rel:(2.25, 0), to:in-point),
+      "end": (rel:(2.25, 0), to:in-point),
     ))
   })
 }
