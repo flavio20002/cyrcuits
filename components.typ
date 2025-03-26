@@ -655,6 +655,7 @@
       "B": (rel:(0, 0), to:in-point),
       "C": (rel:(1, 1), to:in-point),
       "E": (rel:(1, -1), to:in-point),
+      "end": (rel:(1, -1), to:in-point),
     ))
   })
 }

@@ -227,6 +227,9 @@
         show_voltage: show-voltage,
       )
     )
+    if (name!=none){
+      cetz.draw.move-to(name+ ".end")
+    }
   })
 }
 

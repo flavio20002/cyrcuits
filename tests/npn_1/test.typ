@@ -8,7 +8,6 @@
   to((rel: (2,0)), "nos", l: $T$)
   to((rel: (2,0)), "R", l: $R_B$, flow: $I_B$)
   node("npn", name: "Q", show-voltage: true)
-  draw("Q.E")
   to((rel: (0,-1)), "short")
   to((rel: (-5,0)), "short")
   to((rel: (0,-0.5)), "short", node-left: "*")
