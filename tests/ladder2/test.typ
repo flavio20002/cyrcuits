@@ -3,10 +3,7 @@
 #set page(width: auto, height: auto, margin: 0.5cm)
 
 #cyrcuits2({
-  draw((0,0))
-  to((rel: (0,-15)), "short")
-  draw((15,0))
-  to((rel: (0,-15)), "short")
+  ladder-power-bars(height: 15, width: 15)
   draw((0,-1))
   to((rel: (3,0)), "NOContact", l: "PS1")
   node("ton", name: "TON_PS1")
