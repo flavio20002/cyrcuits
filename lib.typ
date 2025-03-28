@@ -231,15 +231,15 @@
 #let cyrcuits2(scale: none, font-size: none, padding: none, elements ) = {
   context{
     let scale-to-use = scale-state.get()
-    if (scale!=none){
+    if (scale != none){
       scale-to-use = scale
     }
     let font-size-to-use = font-size-state.get()
-    if (font-size!=none){
+    if (font-size != none){
       font-size-to-use = font-size
     }
     let pad-to-use = padding-state.get()
-    if (padding!=none){
+    if (padding != none){
       pad-to-use = padding
     }
     figure()[
