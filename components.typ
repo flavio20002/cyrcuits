@@ -631,6 +631,7 @@
       "out": (rel:(1.3, 0), to:in-point),
       "vcc1": (rel:(0, 0.5), to:in-point),
       "vcc2": (rel:(0, -0.5), to:in-point),
+      "end": (rel:(1.3, 0), to:in-point),
     ))
   })
 }
