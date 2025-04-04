@@ -167,14 +167,14 @@
 }
 
 
-#let to(end, component, f: none, l: none, coordinate: none, node-right: none, node-left: none, invert: false) = {
+#let to(end, component, f: none, l: none, coordinate: none, node-right: none, node-left: none, invert: false, l-modifier: none) = {
   cetz.draw.get-ctx(ctx => {
     let st
     let en
     (ctx, st, en) = cetz.coordinate.resolve(ctx, (), end)
     components.at(component)(st, en, 
       (name: component,
-        l-modifier: "",
+        l-modifier: l-modifier,
         label: l,
         flow: f,
         flow-config: ">_",
@@ -182,7 +182,7 @@
         voltage: none,
         node-anchor: none,
         node: none,
-        invert: invert,
+        invert: invert
       )
     )
     if (node-left == "*"){
@@ -204,7 +204,7 @@
   })
 }
 
-#let node(component, start: (), show-voltage: false, name:none, l: none, anchor: none) = {
+#let node(component, start: (), show-voltage: false, name:none, l: none, anchor: none, non_inv_input_up: false) = {
   cetz.draw.get-ctx(ctx => {
     let (ctx, st) = cetz.coordinate.resolve(ctx, start)
     nodes.at(component)(st, 
@@ -214,7 +214,7 @@
         component-name: name,
         anchor: anchor,
         caption: l,
-        non_inv_input_up: false,
+        non_inv_input_up: non_inv_input_up,
         show_voltage: show-voltage,
       )
     )

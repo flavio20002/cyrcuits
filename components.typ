@@ -18,20 +18,20 @@
 
   if (angle == -90deg){
     anchor = "west"
-    if (l-modifier != ""){
+    if (l-modifier != "" and l-modifier != none){
       padding = pad
       anchor = "east"
     }
   } else if (angle == 0deg){ 
     anchor = "south"
-    if (l-modifier != ""){
+    if (l-modifier != "" and l-modifier != none){
       padding = pad
       anchor = "north"
     }
   } else if (angle == 180deg){ 
     anchor = "south"
     pad-angle = -90deg
-    if (l-modifier != ""){
+    if (l-modifier != "" and l-modifier != none){
       padding = pad
       anchor = "north"
     }
@@ -39,7 +39,7 @@
   }
   else {
     anchor = "east"
-    if (l-modifier != ""){
+    if (l-modifier != "" and l-modifier != none){
       padding = pad
       anchor = "west"
     }
@@ -665,21 +665,33 @@
 #let abovenode(start,element) = {
   let in-point = start
    cetz.draw.content((rel:(0, 0.25),to: start), text(size: 0.75em, element.caption), anchor: "south")
+  anchors((
+    "end": start,
+  ))
 }
 
 #let belownode(start,element) = {
   let in-point = start
    cetz.draw.content((rel:(0, -0.25),to: start), text(size: 0.75em, element.caption), anchor: "north")
+  anchors((
+    "end": start,
+  ))
 }
 
 #let rightnode(start,element) = {
   let in-point = start
    cetz.draw.content((rel:(0.25, 0),to: start), text(size: 0.75em, element.caption), anchor: "west")
+  anchors((
+    "end": start,
+  ))
 }
 
 #let leftnode(start,element) = {
   let in-point = start
    cetz.draw.content((rel:(-0.25, 0),to: start), text(size: 0.75em, element.caption), anchor: "east")
+  anchors((
+    "end": start,
+  ))
 }
 
 #let ground(start,element) = {

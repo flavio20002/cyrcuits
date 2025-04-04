@@ -6,6 +6,56 @@
   doc,
 )
 
+#cyrcuits2({
+  draw((0,0))
+  node("above", l: $v_1$)
+  to((rel: (1,0)), "short", node-left: "o")
+  node("op amp", name: "oa", anchor: "+", non_inv_input_up: true)
+
+  draw("oa.in2")
+  to((rel: (0,-1.5)), "short")
+  
+  draw("oa.out")
+  to((rel: (0,-2)), "short")
+  to((rel: (-2.6,0)), "R", l: $R_1$, node-right: "*")
+  to((rel: (0,-2)), "R", l: $R_G$, node-right: "*", l-modifier: true)
+  to((rel: (0,-1.5)), "short")
+  node("op amp", name: "oa2", anchor: "-")
+  
+  draw("oa2.out")
+  to((rel: (0,2)), "short")
+  to((rel: (-2.6,0)), "R", l: $R_1$, node-right: "*")
+  
+  draw("oa2.in2")
+  to((rel: (-1,0)), "short", node-right: "o")
+  node("above", l: $v_2$)
+  
+  draw("oa.out")
+  to((rel: (2.6,0)), "R", l: $R_2$, node-left: "*", node-right: "*")
+  to((rel: (0,-2.5)), "short")
+  node("op amp", name: "oa3", anchor: "-")
+  
+  draw("oa3.out")
+  to((rel: (0,3)), "short")
+  to((rel: (-2.6,0)), "R", l: $R_3$, node-right: "*")
+  
+  draw("oa3.out")
+  to((rel: (1,0)), "short", node-left: "*", node-right: "o")
+  to((rel: (0,-2)), "open", l: $v_o$, invert: true)
+  to((rel: (0,-0.5)), "short", node-left: "o")
+  node("ground")
+  
+  draw("oa3.in2")
+  to((rel: (0,-2.5)), "short")
+  
+  draw("oa2.out")
+  to((rel: (2.6,0)), "R", l: $R_2$, node-left: "*", node-right: "*")
+  to((rel: (2.6,0)), "R", l: $R_3$, node-left: "*")
+  to((rel: (0,-1)), "short")
+  node("ground")
+})
+
+/*
 ```circuitkz
   \begin{circuitikz}
     \draw(0,0)
@@ -47,3 +97,4 @@
     node[ground]{};
   \end{circuitikz}
 ```
+*/
