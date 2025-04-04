@@ -6,21 +6,20 @@
   doc,
 )
 
-```circuitkz
-  \begin{circuitikz}
-    \draw (0,0)
-    node[above]{$v_-$} 
-    to[short, o-] ++(0.5,0)
-    node[op amp, anchor=-](oa){};
-    \draw (oa.in2) 
-    to [short,-o] ++ (-0.5,0)
-    node[above]{$v_+$};
-    \draw (oa.vcc1) to [short,-o] ++ (0,1)
-    node[above]{$+ V_"CC"$};
-    \draw (oa.vcc2) to [short,-o] ++ (0,-1)
-    node[below]{$-V_"CC"$};
-    \draw (oa.out) 
-    to [short,-o] ++ (0.5,0)
-    node[above]{$v_o$};
-  \end{circuitikz}
-```
+ ```circuitkz
+    \begin{circuitikz}
+      \draw (0,0)
+      to[short, o-] ++(0.5,0)
+      node[op amp, anchor=-](oa){};
+      \draw (oa.in2) 
+      to [short,-o] ++ (-0.5,0);
+      \draw (oa.out)
+      to [short,-o] ++ (0.5,0)
+      node[above]{$v_o$}
+      to[open,l=$v_o$, invert] ++ (0,-2)
+      to [short,o-] ++ (0,-0.5)
+      node[ground]{};
+      \draw (0,0)
+      to[open,l_=$v_i$] ++ (0,-1);
+    \end{circuitikz}
+  ```
