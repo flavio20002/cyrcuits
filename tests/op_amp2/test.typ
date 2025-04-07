@@ -12,7 +12,6 @@
 
   draw("oa.out")
   to((rel: (0.5,0)), "short", node-right: "o")
-  node("above", l: $v_o$)
   to((rel: (0,-2)), "open", l: $v_o$, invert: true)
   to((rel: (0,-0.5)), "short", node-left: "o")
   node("ground")

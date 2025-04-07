@@ -224,9 +224,9 @@
   })
 }
 
-#let padding-state = state("padding", 0)
-#let font-size-state = state("font-size", none)
-#let scale-state = state("scale", none)
+#let padding-state = state("cyrcuits-padding", 0)
+#let font-size-state = state("cyrcuits-font-size", none)
+#let scale-state = state("cyrcuits-scale", none)
 
 #let cyrcuits2(scale: none, font-size: none, padding: none, elements ) = {
   context{
@@ -243,12 +243,12 @@
       pad-to-use = padding
     }
     figure()[
-      #set text(size:  font-size-to-use) if font-size-to-use != none
+      #set text(size: font-size-to-use) if font-size-to-use != none
       #if (scale-to-use!=none){
-        set text(size:  0.8em)
+        set text(size: 0.8em)
         cetz.canvas(padding: pad-to-use, { cetz.draw.scale(scale-to-use)} + elements)
       } else{
-        set text(size:  0.8em)
+        set text(size: 0.8em)
         cetz.canvas(padding: pad-to-use, elements)
       }
     ]
