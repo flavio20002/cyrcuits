@@ -2,7 +2,7 @@
 
 #set page(width: auto, height: auto, margin: 0.5cm)
 
-#configure-cyrcuits(scale: 2,font-size: 2em, padding: 1)
+#configure-cyrcuits(scale: 2, text-size: 2em, padding: 1)
 
 #cyrcuits2({
   draw((0,0))

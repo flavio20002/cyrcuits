@@ -225,25 +225,25 @@
 }
 
 #let padding-state = state("cyrcuits-padding", 0)
-#let font-size-state = state("cyrcuits-font-size", none)
+#let text-size-state = state("cyrcuits-text-size", none)
 #let scale-state = state("cyrcuits-scale", none)
 
-#let cyrcuits2(scale: none, font-size: none, padding: none, elements ) = {
+#let cyrcuits2(scale: none, text-size: none, padding: none, elements ) = {
   context{
     let scale-to-use = scale-state.get()
     if (scale != none){
       scale-to-use = scale
     }
-    let font-size-to-use = font-size-state.get()
-    if (font-size != none){
-      font-size-to-use = font-size
+    let text-size-to-use = text-size-state.get()
+    if (text-size != none){
+      text-size-to-use = text-size
     }
     let pad-to-use = padding-state.get()
     if (padding != none){
       pad-to-use = padding
     }
     figure()[
-      #set text(size: font-size-to-use) if font-size-to-use != none
+      #set text(size: text-size-to-use) if text-size-to-use != none
       #if (scale-to-use!=none){
         set text(size: 0.8em)
         cetz.canvas(padding: pad-to-use, { cetz.draw.scale(scale-to-use)} + elements)
@@ -255,9 +255,9 @@
   }
 }
 
-#let configure-cyrcuits(scale: none, font-size: none, padding: none) = {
+#let configure-cyrcuits(scale: none, text-size: none, padding: none) = {
   scale-state.update(x => scale)
-  font-size-state.update(x => font-size)
+  text-size-state.update(x => text-size)
   padding-state.update(x => padding)
 }
 
