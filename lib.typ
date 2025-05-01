@@ -260,10 +260,3 @@
   text-size-state.update(x => text-size)
   padding-state.update(x => padding)
 }
-
-#let ladder-power-bars(width: 9, height: 10) = {
-  draw((0,0))
-  to((rel: (0,-height)), "short")
-  draw((width,0))
-  to((rel: (0,-height)), "short")
-}
