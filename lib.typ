@@ -167,7 +167,7 @@
 }
 
 
-#let to(end, component, f: none, v:none, l: none, coordinate: none, node-right: none, node-left: none, invert: false, l-modifier: none) = {
+#let to(end, component, f: none, v:none, l: none, coordinate: none, node-right: none, node-left: none, invert: false, l-modifier: none, flow-config: ">_") = {
   cetz.draw.get-ctx(ctx => {
     let st
     let en
@@ -177,7 +177,7 @@
         l-modifier: l-modifier,
         label: l,
         flow: f,
-        flow-config: ">_",
+        flow-config: flow-config,
         voltage: v,
         node-anchor: none,
         node: none,
