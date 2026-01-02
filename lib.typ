@@ -1,4 +1,4 @@
-#import "@preview/cetz:0.3.4"
+#import "@preview/cetz:0.4.2"
 #import "components.typ" : *
 
 #let parse-circuit(raw_code) = {
@@ -166,6 +166,10 @@
   })
 }
 
+#let drawC(start) = {
+  draw(start)
+}
+
 
 #let to(end, component, f: none, v:none, l: none, coordinate: none, node-right: none, node-left: none, invert: false, l-modifier: none, flow-config: ">_") = {
   cetz.draw.get-ctx(ctx => {
@@ -227,7 +231,7 @@
 #let text-size-state = state("cyrcuits-text-size", none)
 #let scale-state = state("cyrcuits-scale", none)
 
-#let cyrcuits2(scale: none, text-size: none, padding: none, elements ) = {
+#let cyrcuits2(scale: none, text-size: none, padding: none, caption:none, elements) = {
   context{
     let scale-to-use = scale-state.get()
     if (scale != none){
@@ -241,11 +245,13 @@
     if (padding != none){
       pad-to-use = padding
     }
-    figure()[
+    figure(caption: caption)[
       #set text(size: text-size-to-use) if text-size-to-use != none
       #if (scale-to-use!=none){
         set text(size: 0.8em)
-        cetz.canvas(padding: pad-to-use, { cetz.draw.scale(scale-to-use)} + elements)
+        cetz.canvas(padding: pad-to-use, {
+          cetz.draw.set-style(mark: (scale: scale-to-use))
+          cetz.draw.scale(scale-to-use)} + elements)
       } else{
         set text(size: 0.8em)
         cetz.canvas(padding: pad-to-use, elements)

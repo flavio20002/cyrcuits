@@ -1,4 +1,4 @@
-#import "@preview/cetz:0.3.4"
+#import "@preview/cetz:0.4.2"
 
 #let anchors(anchors) = {
   for (k, v) in anchors {
@@ -545,8 +545,12 @@
       cetz.draw.line((rel: (0, -0.25), to: "triangle.east"),
         (rel: (0, .5)),
       )
-      cetz.draw.line((rel: (-0.25, 0.25), to: "triangle.east"),(rel: (0.2, 0.2)), stroke: 0.5pt, mark: (scale: 0.5, end: ">"))
-      cetz.draw.line((rel: (-0.1, 0.25), to: "triangle.east"),(rel: (0.2, 0.2)), stroke: 0.5pt, mark: (scale: 0.5, end: ">"))
+      cetz.draw.get-ctx(ctx => {
+        let t = ctx.transform
+        let scale-to-use = t.at(0).at(1)
+        cetz.draw.line((rel: (-0.25, 0.25), to: "triangle.east"),(rel: (0.2, 0.2)), stroke: 0.5pt, mark: (scale: 0.5*scale-to-use, end: ">"))
+        cetz.draw.line((rel: (-0.1, 0.25), to: "triangle.east"),(rel: (0.2, 0.2)), stroke: 0.5pt, mark: (scale: 0.5*scale-to-use, end: ">"))
+      })
     })
 }
 
