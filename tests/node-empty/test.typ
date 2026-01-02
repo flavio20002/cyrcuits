@@ -1,10 +1,38 @@
 #import "../../lib.typ": *
 
 #set page(width: auto, height: auto, margin: 0.5cm)
-#show: doc => cyrcuits(
-  scale: 1,
-  doc,
-)
+
+#cyrcuits2({
+  draw((0,0))
+  to((rel: (0,4)), "open", l: $v_i(t)$)
+  to((rel: (2,0)), "short", node-left: "o", node-right: "*", coordinate: "a")
+  to((rel: (0,-2)), "R", l: $R$)
+  to((rel: (0,-2)), "C", l: $C$, node-right: "*")
+  to((rel: (-2,0)), "short", node-right: "o")
+
+  draw("a")
+  to((rel: (1,0)), "short", coordinate: "b")
+  to((rel: (0,0.5)), "short", node-left: "*")
+  to((rel: (2,0)), "C", l: $C$)
+  to((rel: (0,-0.5)), "short")
+  to((rel: (1,0)), "short", node-left: "*", node-right: "*", coordinate: "c")
+  to((rel: (0,-4)), "R", l: $R$, coordinate: "d")
+  to((rel: (-4,0)), "short", node-left: "*")
+
+  draw("b")
+  to((rel: (0,-0.5)), "short", node-left: "*")
+  to((rel: (2,0)), "R", l: $2R$, l-modifier: "_")
+  to((rel: (0,1)), "short")
+
+  draw("c")
+  to((rel: (2,0)), "short", node-right: "o")
+
+  draw("d")
+  to((rel: (2,0)), "short", node-right: "o")
+  to((rel: (0,4)), "open", l: $v_o(t)$, l-modifier: "_")
+})
+
+/*
 
 ```circuitkz
   \begin{circuitikz}
@@ -33,3 +61,4 @@
       to[open,l_=$v_o(t)$] ++ (0,4)
   \end{circuitikz}
 ```
+*/

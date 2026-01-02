@@ -1,11 +1,29 @@
 #import "../../lib.typ": *
 
 #set page(width: auto, height: auto, margin: 0.5cm)
-#show: doc => cyrcuits(
-  scale: 1,
-  doc,
-)
 
+#cyrcuits2({
+  draw((0,0))
+  to((rel: (0,2.5)), "battery1", l: $E_1$)
+  to((rel: (0,2.5)), "R", l: $R_1$, f: $i_1$)
+  to((rel: (2.5,0)), "R", l: $R_2$, node-right: "*", coordinate: "aux1")
+  to((rel: (0,-2.5)), "R", l: $R_3$, l-modifier: "_")
+  to((rel: (0,-2.5)), "R", l: $R_4$, f: $i_2$, node-right: "*")
+  to((rel: (-2.5,0)), "short", node-left: "*")
+
+  draw("aux1")
+  to((rel: (2.5,0)), "short")
+  to((rel: (0,-2.5)), "battery1", l: $E_2$, l-modifier: "_", f: $i_3$, invert: true, coordinate: "aux2")
+  to((rel: (0,-2.5)), "R", l: $R_5$, f: $i_4$, invert: true)
+  to((rel: (-2.5,0)), "short", f: $i_6$)
+
+  draw("aux2")
+  to((rel: (2.5,0)), "R", l: $R_6$, node-left: "*")
+  to((rel: (0,-2.5)), "battery1", l: $E_3$, f: $i_5$, invert: true)
+  to((rel: (-2.5,0)), "short", node-right: "*")
+})
+
+/*
 ```circuitkz
    \begin{circuitikz}
         \draw (0,0)
@@ -26,3 +44,4 @@
         to[short, -*] ++ (-2.5,0);
     \end{circuitikz}
 ```
+*/

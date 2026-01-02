@@ -18,11 +18,7 @@
   to((rel: (0,-2)), "led", l: $D$)
 })
 
-/* #show: doc => cyrcuits(
-  scale: 1,
-  doc,
-)
-
+/* 
  ```circuitkz
     \begin{circuitikz}
       \draw (0,0)

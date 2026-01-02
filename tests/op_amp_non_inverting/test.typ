@@ -24,11 +24,6 @@
 })
 
 /*
-#show: doc => cyrcuits(
-  scale: 1,
-  doc,
-)
-
 ```circuitkz
   \begin{circuitikz}
     \draw (0,0)
