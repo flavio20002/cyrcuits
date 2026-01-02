@@ -1,11 +1,22 @@
 #import "../../lib.typ": *
 
 #set page(width: auto, height: auto, margin: 0.5cm)
-#show: doc => cyrcuits(
-  scale: 1,
-  doc,
-)
 
+#cyrcuits2({
+  draw((0,0))
+  to((rel: (0,2)), "battery1", l: $E$)
+  to((rel: (0,2)), "R", l: $R_1$, f: $i_1$)
+  to((rel: (2,0)), "short", node-right: "*", coordinate: "aux1")
+  to((rel: (0,-4)), "R", l: $R_2$, l-modifier: "_", f: $i_2$)
+  to((rel: (-2,0)), "short", node-left: "*")
+
+  draw("aux1")
+  to((rel: (2,0)), "nos", l: $T$, coordinate: "aux2")
+  to((rel: (0,-4)), "L", l: $L$, l-modifier: "_", v: $v_L$, f: $i_L$)
+  to((rel: (-2,0)), "short")
+})
+
+/*
 ```circuitkz
 \begin{circuitikz}
     \draw (0,0)
@@ -20,3 +31,4 @@
     to[short] ++ (-2,0);
 \end{circuitikz}
 ```
+*/

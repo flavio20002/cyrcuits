@@ -2,14 +2,17 @@
 
 #set page(width: auto, height: auto, margin: 0.5cm)
 
+#cyrcuits2({
+  draw((0,0))
+  to((rel: (0,4)), "battery1", l: $E$)
+  to((rel: (2,0)), "nos", l: $E$)
+  to((rel: (2,0)), "R", l: $R$)
+  to((rel: (0,-4)), "C", l: $C$, l-modifier: "_", v: $v_C$, f: $i_C$)
+  to((rel: (-4,0)), "short")
+})
 
-#show: doc => cyrcuits(
-  scale: 1,
-  doc,
-)
-
-#align(center + horizon, 
-  ```circuitkz
+/*
+```circuitkz
 \begin{circuitikz}
     \draw (0,0)
     to[battery1=$E$] ++ (0,4)
@@ -19,4 +22,4 @@
     to[short] ++ (-4,0);
 \end{circuitikz}
   ```
-)
+*/
