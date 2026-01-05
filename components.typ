@@ -177,6 +177,47 @@
   })
 }
 
+#let potentiometer(start, end, element) = {
+  let (x1,y1,..) = start
+  let (x2,y2,..) = end
+  let angle = calc.atan2(x2 - x1, y2 - y1)
+  if (element.label != none){
+    component-content(start,end, element.l-modifier, element.label, angle,pad: 0.4)
+  }
+  if (element.flow != none){
+    component-flow(start,end,angle, element.flow, flow-config: element.flow-config)
+  }
+  if (element.voltage != none){
+    component-voltage(start,end,angle,element.voltage)
+  }
+  cetz.draw.group(name: element.name, ctx => {
+    cetz.draw.rotate(angle, origin: start)
+    let component-length = 2
+    let step = 1/6
+    let height = 5/14
+    let sgn = -1
+    let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
+    cetz.draw.line(
+      start,
+      (rel: ((total-length - component-length)/2, 0)),
+      (rel: (0.5, 0)),
+      (rel: (step/2, height/2)),
+      ..for _ in range(5) {
+        ((rel: (step, height * sgn)),)
+        sgn *= -1
+      },
+      (rel: (step/2, height/2)),
+      (rel: (0.5, 0)),
+      (rel: ((total-length - component-length)/2, 0)),
+      fill: none
+    )
+     cetz.draw.line((rel:(total-length/2, 0.25), to:start),(rel: (0,0.75)), mark: (start: ">"))
+
+     anchors((
+      "wiber": (rel:(total-length/2, 1), to:start),
+    ))
+  })
+}
 
 #let generic(start, end, element) = {
   let (x1,y1,..) = start
@@ -715,6 +756,7 @@
   "nos": nos,
   "ospst": ospst,
   "R": R,
+  "potentiometer": potentiometer,
   "C": C,
   "L": L,
   "led": led,
@@ -728,5 +770,5 @@
   "above": abovenode,
   "below": belownode,
   "right": rightnode,
-  "left": leftnode,
+  "left": leftnode
 )

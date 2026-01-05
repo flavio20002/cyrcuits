@@ -171,13 +171,19 @@
 }
 
 
-#let to(end, component, f: none, v:none, l: none, coordinate: none, node-right: none, node-left: none, invert: false, l-modifier: none, flow-config: ">_") = {
+#let to(end, component, f: none, v:none, l: none, coordinate: none, node-right: none, node-left: none, invert: false, l-modifier: none, flow-config: ">_", n: none) = {
+  let component-name
+  if (n!= none){
+    component-name = n
+  } else{
+    component-name = component
+  }
   cetz.draw.get-ctx(ctx => {
     let st
     let en
     (ctx, st, en) = cetz.coordinate.resolve(ctx, (), end)
     components.at(component)(st, en, 
-      (name: component,
+      (name: component-name,
         l-modifier: l-modifier,
         label: l,
         flow: f,
