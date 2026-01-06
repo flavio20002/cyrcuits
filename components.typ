@@ -706,6 +706,36 @@
   })
 }
 
+#let darlington(start,element) = {
+  cetz.draw.set-style(mark: (fill: black))
+  let in-point = start
+  cetz.draw.group(name: element.component-name, ctx => {
+    cetz.draw.line((rel: (0,0),to: in-point), (rel:(0.25,0)))
+    cetz.draw.line((rel: (0.25,-0.25),to: in-point), (rel:(0,0.5)),stroke: 2pt)
+    cetz.draw.line((rel: (0.25,0.125),to: in-point), (rel:(0.25,0.125)), (rel:(0.5,0)), (rel:(0,0.25)))
+    cetz.draw.circle((rel: (1,0.25),to: in-point), radius: 0.0375, stroke: black, fill: black)
+    cetz.draw.get-ctx(ctx => {
+      let t = ctx.transform
+      let scale-to-use = t.at(0).at(0)
+      cetz.draw.line((rel: (0.25,-0.125),to: in-point), (rel:(0.25,-0.125)), mark: (end: ">", offset: 0.0, stroke: 0.5pt, scale: 0.5*scale-to-use))
+      cetz.draw.line((rel: (0.75,-0.375),to: in-point), (rel:(0.25,-0.125)), mark: (end: ">", offset: 0.0, stroke: 0.5pt, scale: 0.5*scale-to-use))
+
+    })
+    cetz.draw.line((rel: (0.5,-0.25),to: in-point), (rel:(0.25,0)))
+    cetz.draw.line((rel: (0.75,-0.5),to: in-point), (rel:(0,0.5)),stroke: 2pt)
+    cetz.draw.line((rel: (0.75,-0.125),to: in-point), (rel:(0.25,0.125)), (rel:(0,0.25)))
+    cetz.draw.line((rel: (1,-0.5),to: in-point), (rel:(0,-0.25)))
+    cetz.draw.circle((rel: (0.625,0),to: in-point), radius: 0.625)
+    cetz.draw.content((rel:(1.875, 0),to: start), text(element.component-name), anchor: "mid-east")
+    anchors((
+      "B": (rel:(0, 0), to:in-point),
+      "C": (rel:(1, 0.5), to:in-point),
+      "E": (rel:(1, -0.75), to:in-point),
+      "end": (rel:(1, -0.75), to:in-point),
+    ))
+  })
+}
+
 
 #let abovenode(start,element) = {
   let in-point = start
@@ -733,7 +763,7 @@
 
 #let leftnode(start,element) = {
   let in-point = start
-   cetz.draw.content((rel:(-0.25, 0),to: start), text(size: 0.75em, element.caption), anchor: "east")
+  cetz.draw.content((rel:(-0.25, 0),to: start), text(size: 0.75em, element.caption), anchor: "east")
   anchors((
     "end": start,
   ))
@@ -766,6 +796,7 @@
   "spdt": spdt,
   "op amp": op-amp,
   "npn": npn,
+  "darlington": darlington,
   "ground": ground,
   "above": abovenode,
   "below": belownode,
