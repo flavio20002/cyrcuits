@@ -178,6 +178,7 @@
 }
 
 #let potentiometer(start, end, element) = {
+  cetz.draw.set-style(mark: (fill: black))
   let (x1,y1,..) = start
   let (x2,y2,..) = end
   let angle = calc.atan2(x2 - x1, y2 - y1)
