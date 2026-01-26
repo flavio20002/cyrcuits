@@ -578,12 +578,12 @@
     let total-length = calc.sqrt(calc.pow(y2 - y1,2) + calc.pow((x2 - x1),2))
       cetz.draw.line(
         start,
-        (rel: ((total-length - component-length)/2, 0)),
+        (rel: ((total-length - component-length)/2 - 0.125, 0)),
       )
-      cetz.draw.polygon((), 3, angle: 0deg, radius: 0.25, fill:black, name: "triangle")
+      cetz.draw.polygon((rel: (0.125,0)), 3, angle: 0deg, radius: 0.25, name: "triangle")
       cetz.draw.line(
-        (rel: (component-length+(total-length - component-length)/2, 0), to: start),
-        (rel: ((total-length - component-length)/2, 0)),
+        (rel: (component-length+(total-length - component-length)/2 + 0.25, 0), to: start),
+        (rel: ((total-length - component-length)/2 - 0.25, 0)),
       )
       cetz.draw.line((rel: (0, -0.25), to: "triangle.east"),
         (rel: (0, .5)),
