@@ -1,6 +1,7 @@
 #import "../lib.typ": *
 
 #set page(width: auto, height: auto, margin: 0.5cm)
+#configure-cyrcuits(scale: 1, text-size: 1em)
 
 #cyrcuits2({
   to((rel: (0,2)), "battery1", l: $V_"CC"$)
