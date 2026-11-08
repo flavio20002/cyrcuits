@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: mfinelli/setup-imagemagick@v5
+      - uses: mfinelli/setup-imagemagick@v8
         with:
           cache: true
       - name: Install just from crates.io
